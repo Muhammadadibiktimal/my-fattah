@@ -150,9 +150,9 @@
           <h2 class="text-base md:text-xl font-bold text-gray-800">@yield('title')</h2>
         </div>
 
-        <div class="flex items-center space-x-4">
-          <span class="flex items-center text-gray-700 font-medium text-sm">
-            <span class="iconify text-green-600 mr-2 text-lg" data-icon="mdi:account-circle-outline"></span>
+        <div class="flex items-center space-x-3">
+          <span class="hidden sm:flex items-center text-xs md:text-sm text-gray-700 font-semibold bg-gray-100 px-3 py-1.5 rounded-xl">
+            <span class="iconify text-green-600 mr-1.5 text-base" data-icon="mdi:account-circle-outline"></span>
             {{ Auth::user()->name ?? 'Santri' }}
           </span>
 
@@ -161,8 +161,8 @@
             @csrf
             <button
               type="submit"
-              class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold rounded-xl transition">
-              <span class="iconify text-sm" data-icon="mdi:logout"></span>
+              class="inline-flex items-center gap-1.5 px-3.5 py-1.5 md:px-4 md:py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs md:text-sm shadow transition">
+              <span class="iconify text-base" data-icon="mdi:logout"></span>
               <span class="hidden sm:inline">Logout</span>
             </button>
           </form>

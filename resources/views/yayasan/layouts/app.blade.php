@@ -103,52 +103,39 @@
                 </a>
             </nav>
 
-            <!-- User Footer Info -->
-            <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-sm">
-                        KY
-                    </div>
-                    <div class="overflow-hidden">
-                        <p class="text-xs font-bold text-gray-800 truncate max-w-[120px]">{{ Auth::user()->name }}</p>
-                        <span class="text-[10px] text-gray-500 font-semibold">Ketua Yayasan</span>
-                    </div>
-                </div>
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" title="Keluar" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition">
-                        <span class="iconify text-xl" data-icon="mdi:logout"></span>
-                    </button>
-                </form>
+            <!-- Footer Sidebar -->
+            <div class="p-4 border-t border-gray-100 text-xs text-gray-500 text-center">
+              © {{ date('Y') }} Pesantren Al-Fattah
             </div>
         </aside>
 
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col min-w-0">
-            <!-- Topbar -->
-            <header class="bg-white border-b border-gray-200 px-4 md:px-6 py-3.5 flex items-center justify-between shadow-sm sticky top-0 z-20">
+            <!-- Topbar Header Sticky -->
+            <header class="bg-white border-b border-gray-200 px-4 md:px-8 py-3.5 flex items-center justify-between shadow-sm sticky top-0 z-20">
                 <div class="flex items-center gap-3">
-                    <button @click="sidebarOpen = true" class="lg:hidden p-2 text-gray-600 hover:text-emerald-700 hover:bg-gray-100 rounded-xl transition">
+                    <button @click="sidebarOpen = true" class="lg:hidden p-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-xl transition">
                         <span class="iconify text-2xl" data-icon="mdi:menu"></span>
                     </button>
                     <div>
-                        <h2 class="text-base md:text-lg font-bold text-gray-900 leading-tight truncate">@yield('title')</h2>
-                        <span class="hidden sm:inline text-[11px] text-gray-400">Pondok Pesantren Al-Fattah Tigaraksa</span>
+                        <h2 class="text-base md:text-lg font-bold text-gray-800 leading-tight truncate">@yield('title')</h2>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <span class="hidden sm:flex px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold items-center gap-1.5">
-                        <span class="iconify text-emerald-600" data-icon="mdi:shield-check"></span>
-                        <span>Ketua Yayasan</span>
+                <div class="flex items-center space-x-3">
+                    <span class="hidden sm:flex items-center text-xs md:text-sm text-gray-700 font-semibold bg-gray-100 px-3 py-1.5 rounded-xl">
+                        <span class="iconify text-green-600 mr-1.5 text-base" data-icon="mdi:shield-check"></span>
+                        {{ Auth::user()->name ?? 'Ketua Yayasan' }}
                     </span>
 
+                    <!-- Tombol Logout -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold rounded-xl transition flex items-center gap-1">
-                            <span class="iconify" data-icon="mdi:power"></span>
-                            <span class="hidden sm:inline">Logout</span>
+                        <button
+                          type="submit"
+                          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 md:px-4 md:py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs md:text-sm shadow transition">
+                          <span class="iconify text-base" data-icon="mdi:logout"></span>
+                          <span class="hidden sm:inline">Logout</span>
                         </button>
                     </form>
                 </div>

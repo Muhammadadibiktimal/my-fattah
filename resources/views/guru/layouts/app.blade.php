@@ -109,16 +109,9 @@
         </a>
       </nav>
 
-      <!-- Tombol Logout -->
-      <div class="p-4 border-t border-gray-100">
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button type="submit"
-                  class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-xs font-bold transition">
-            <span class="iconify text-base" data-icon="mdi:logout"></span>
-            <span>Keluar Akun (Logout)</span>
-          </button>
-        </form>
+      <!-- Footer Sidebar -->
+      <div class="p-4 border-t border-gray-100 text-xs text-gray-500 text-center">
+        © {{ date('Y') }} Pesantren Al-Fattah
       </div>
     </aside>
 
@@ -126,27 +119,32 @@
     <div class="flex-1 flex flex-col min-w-0">
 
       <!-- Header Sticky Navbar Mobile Friendly -->
-      <header class="bg-white border-b border-gray-200 px-4 md:px-6 py-3.5 flex justify-between items-center sticky top-0 z-20 shadow-sm">
+      <header class="bg-white border-b border-gray-200 px-4 md:px-8 py-3.5 flex justify-between items-center sticky top-0 z-20 shadow-sm">
         <div class="flex items-center gap-3">
-          <button @click="sidebarOpen = true" class="lg:hidden p-2 text-gray-600 hover:text-emerald-700 hover:bg-gray-100 rounded-xl transition">
+          <button @click="sidebarOpen = true" class="lg:hidden p-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-xl transition">
             <span class="iconify text-2xl" data-icon="mdi:menu"></span>
           </button>
           <div>
-            <h2 class="text-base md:text-xl font-bold text-gray-800 truncate">@yield('title')</h2>
-            <span class="hidden sm:inline text-xs text-gray-400">Tahun Ajaran 2026/2027 • Semester Ganjil</span>
+            <h2 class="text-base md:text-lg font-bold text-gray-800 truncate">@yield('title')</h2>
           </div>
         </div>
 
-        <div class="flex items-center gap-3">
-          <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-lg text-xs text-gray-600">
-            <span class="iconify text-green-600" data-icon="mdi:clock-outline"></span>
-            <span>{{ date('d F Y') }}</span>
-          </div>
+        <div class="flex items-center space-x-3">
+          <span class="hidden sm:flex items-center text-xs md:text-sm text-gray-700 font-semibold bg-gray-100 px-3 py-1.5 rounded-xl">
+            <span class="iconify text-green-600 mr-1.5 text-base" data-icon="mdi:teach"></span>
+            {{ Auth::user()->name ?? 'Guru' }}
+          </span>
 
-          <div class="text-right">
-            <span class="block text-xs font-bold text-gray-900 truncate max-w-[120px]">{{ Auth::user()->name }}</span>
-            <span class="block text-[11px] text-emerald-600 font-semibold">Dewan Pengajar</span>
-          </div>
+          <!-- Tombol Logout -->
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button
+              type="submit"
+              class="inline-flex items-center gap-1.5 px-3.5 py-1.5 md:px-4 md:py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs md:text-sm shadow transition">
+              <span class="iconify text-base" data-icon="mdi:logout"></span>
+              <span class="hidden sm:inline">Logout</span>
+            </button>
+          </form>
         </div>
       </header>
 
