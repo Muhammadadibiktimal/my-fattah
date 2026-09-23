@@ -19,12 +19,13 @@ RUN apt-get update && apt-get install -y \
     sqlite3 \
     libsqlite3-dev
 
+# Disable mpm_event & mpm_worker, enable mpm_prefork (Fix AH00534: More than one MPM loaded)
+RUN a2dismod mpm_event mpm_worker || true
+RUN a2enmod mpm_prefork rewrite
+
 # Configure & Install PHP Extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd zip
-
-# Enable Apache Mod Rewrite
-RUN a2enmod rewrite
 
 # Change Apache Root Directory to /var/www/html/public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
