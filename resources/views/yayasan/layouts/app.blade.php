@@ -22,107 +22,102 @@
              x-transition:leave="transition-opacity ease-linear duration-300"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
-             class="fixed inset-0 bg-slate-950/70 z-40 lg:hidden backdrop-blur-sm"
+             class="fixed inset-0 bg-gray-900/60 z-40 lg:hidden backdrop-blur-sm"
              style="display: none;"></div>
 
-        <!-- Sidebar Ketua Yayasan (Tema Eksekutif Emerald & Gold) -->
+        <!-- Sidebar Ketua Yayasan (Clean White Style seperti Admin) -->
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-               class="fixed lg:static inset-y-0 left-0 w-72 bg-slate-900 text-slate-100 flex flex-col shadow-2xl flex-shrink-0 z-50 transition-transform duration-300 ease-in-out">
+               class="fixed lg:static inset-y-0 left-0 w-64 bg-white border-r border-gray-200 shadow-xl lg:shadow-sm flex flex-col z-50 transition-transform duration-300 ease-in-out flex-shrink-0">
             
             <!-- Brand Header -->
-            <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-white rounded-2xl p-1.5 shadow flex items-center justify-center flex-shrink-0">
-                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo Yayasan" class="w-full h-full object-contain" />
-                    </div>
+                    <img src="{{ asset('images/logo/logo.png') }}" alt="Logo Yayasan" class="h-10 w-10 object-contain" />
                     <div>
-                        <h1 class="text-base font-black text-emerald-400 tracking-tight leading-tight">Yayasan Al-Fattah</h1>
-                        <div class="flex items-center gap-1.5 mt-0.5">
-                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                            <span class="text-[10px] text-amber-300 font-bold uppercase tracking-widest">Portal Ketua Yayasan</span>
-                        </div>
+                        <h1 class="text-base font-extrabold text-green-700 leading-tight">Yayasan Al-Fattah</h1>
+                        <span class="text-[10px] text-emerald-800 bg-emerald-100/70 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Ketua Yayasan</span>
                     </div>
                 </div>
-                <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white">
+                <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-gray-700">
                     <span class="iconify text-2xl" data-icon="mdi:close"></span>
                 </button>
             </div>
 
             <!-- Navigation Links -->
-            <nav class="flex-1 px-4 py-6 space-y-1 text-sm overflow-y-auto">
+            <nav class="flex-1 px-4 py-6 space-y-1.5 text-sm overflow-y-auto">
                 <!-- Dashboard Utama -->
                 <a href="{{ route('yayasan.dashboard') }}"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition {{ request()->routeIs('yayasan.dashboard') ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-900/40' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                    <span class="iconify text-xl {{ request()->routeIs('yayasan.dashboard') ? 'text-white' : 'text-emerald-400' }}" data-icon="mdi:view-dashboard"></span>
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('yayasan.dashboard') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+                    <span class="iconify text-xl text-green-600" data-icon="mdi:view-dashboard"></span>
                     <span>Dashboard Eksekutif</span>
                 </a>
 
                 <!-- SECTION: PUSAT SELURUH LAPORAN -->
                 <div class="pt-5 pb-2">
-                    <span class="px-4 text-[10px] font-extrabold text-slate-400 uppercase tracking-widest flex items-center justify-between">
+                    <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center justify-between">
                         <span>Pusat Laporan Lembaga</span>
-                        <span class="px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 text-[9px]">6 Laporan</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[9px] font-bold">6 Laporan</span>
                     </span>
                 </div>
 
                 <!-- 1. Laporan PPDB & Calon Santri -->
                 <a href="{{ route('yayasan.laporan.pendaftar') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition {{ request()->routeIs('yayasan.laporan.pendaftar') ? 'bg-emerald-600/30 text-emerald-300 border-l-4 border-emerald-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                    <span class="iconify text-lg text-emerald-400" data-icon="mdi:account-school-outline"></span>
+                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('yayasan.laporan.pendaftar') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+                    <span class="iconify text-lg text-emerald-600" data-icon="mdi:account-school-outline"></span>
                     <span>1. Laporan PPDB & Pendaftar</span>
                 </a>
 
                 <!-- 2. Laporan Keuangan Midtrans -->
                 <a href="{{ route('yayasan.laporan.keuangan') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition {{ request()->routeIs('yayasan.laporan.keuangan') ? 'bg-emerald-600/30 text-emerald-300 border-l-4 border-emerald-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                    <span class="iconify text-lg text-amber-400" data-icon="mdi:cash-multiple"></span>
-                    <span>2. Laporan Keuangan Midtrans</span>
+                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('yayasan.laporan.keuangan') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+                    <span class="iconify text-lg text-amber-500" data-icon="mdi:cash-multiple"></span>
+                    <span>2. Keuangan Midtrans</span>
                 </a>
 
                 <!-- 3. Laporan Santri Aktif & Kenaikan -->
                 <a href="{{ route('yayasan.laporan.santri') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition {{ request()->routeIs('yayasan.laporan.santri') ? 'bg-emerald-600/30 text-emerald-300 border-l-4 border-emerald-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                    <span class="iconify text-lg text-blue-400" data-icon="mdi:account-group"></span>
-                    <span>3. Laporan Santri & Kenaikan</span>
+                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('yayasan.laporan.santri') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+                    <span class="iconify text-lg text-blue-600" data-icon="mdi:account-group"></span>
+                    <span>3. Santri & Kenaikan</span>
                 </a>
 
                 <!-- 4. Laporan Akademik & Rapor Nilai -->
                 <a href="{{ route('yayasan.laporan.nilai') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition {{ request()->routeIs('yayasan.laporan.nilai') ? 'bg-emerald-600/30 text-emerald-300 border-l-4 border-emerald-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                    <span class="iconify text-lg text-purple-400" data-icon="mdi:certificate"></span>
-                    <span>4. Laporan Nilai Akademik</span>
+                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('yayasan.laporan.nilai') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+                    <span class="iconify text-lg text-purple-600" data-icon="mdi:certificate"></span>
+                    <span>4. Nilai & Rapor Akademik</span>
                 </a>
 
                 <!-- 5. Laporan Presensi & Kehadiran -->
                 <a href="{{ route('yayasan.laporan.absensi') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition {{ request()->routeIs('yayasan.laporan.absensi') ? 'bg-emerald-600/30 text-emerald-300 border-l-4 border-emerald-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                    <span class="iconify text-lg text-teal-400" data-icon="mdi:calendar-check-outline"></span>
-                    <span>5. Laporan Presensi Kehadiran</span>
+                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('yayasan.laporan.absensi') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+                    <span class="iconify text-lg text-teal-600" data-icon="mdi:calendar-check-outline"></span>
+                    <span>5. Presensi Kehadiran</span>
                 </a>
 
                 <!-- 6. Laporan Dewan Guru & Rombel -->
                 <a href="{{ route('yayasan.laporan.guru') }}"
-                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition {{ request()->routeIs('yayasan.laporan.guru') ? 'bg-emerald-600/30 text-emerald-300 border-l-4 border-emerald-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
-                    <span class="iconify text-lg text-pink-400" data-icon="mdi:teach"></span>
+                   class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('yayasan.laporan.guru') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+                    <span class="iconify text-lg text-pink-600" data-icon="mdi:teach"></span>
                     <span>6. Laporan Dewan Guru</span>
                 </a>
             </nav>
 
             <!-- User Footer Info -->
-            <div class="p-4 border-t border-slate-800 bg-slate-950/50 flex items-center justify-between">
+            <div class="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-400 to-yellow-500 text-slate-950 font-black flex items-center justify-center text-xs shadow">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-sm">
                         KY
                     </div>
                     <div class="overflow-hidden">
-                        <p class="text-xs font-bold text-white truncate max-w-[130px]">{{ Auth::user()->name }}</p>
-                        <span class="text-[10px] text-amber-300 font-semibold">Ketua Yayasan</span>
+                        <p class="text-xs font-bold text-gray-800 truncate max-w-[120px]">{{ Auth::user()->name }}</p>
+                        <span class="text-[10px] text-gray-500 font-semibold">Ketua Yayasan</span>
                     </div>
                 </div>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" title="Keluar" class="p-2 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition">
+                    <button type="submit" title="Keluar" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition">
                         <span class="iconify text-xl" data-icon="mdi:logout"></span>
                     </button>
                 </form>
@@ -144,8 +139,8 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <span class="hidden sm:flex px-3 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-full text-xs font-bold items-center gap-1.5">
-                        <span class="iconify text-amber-600" data-icon="mdi:shield-check"></span>
+                    <span class="hidden sm:flex px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold items-center gap-1.5">
+                        <span class="iconify text-emerald-600" data-icon="mdi:shield-check"></span>
                         <span>Ketua Yayasan</span>
                     </span>
 

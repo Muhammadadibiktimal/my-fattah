@@ -10,16 +10,34 @@
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 </head>
 
-<body class="bg-gray-50 font-sans antialiased">
-  <div class="flex min-h-screen">
+<body class="bg-gray-50 font-sans antialiased" x-data="{ sidebarOpen: false }">
+  <div class="flex min-h-screen relative overflow-x-hidden">
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div x-show="sidebarOpen"
+         @click="sidebarOpen = false"
+         x-transition:enter="transition-opacity ease-linear duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-linear duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 bg-gray-900/60 z-40 lg:hidden backdrop-blur-sm"
+         style="display: none;"></div>
+
     <!-- Sidebar Santri (Clean White Style seperti Admin) -->
-    <aside class="w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col">
-      <div class="p-6 border-b border-gray-100 flex items-center gap-3">
-        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo Al-Fattah" class="h-10 w-10 object-contain" />
-        <div>
-          <h1 class="text-lg font-extrabold text-green-600 tracking-tight leading-tight">Al-Fattah</h1>
-          <span class="text-[10px] text-gray-400 font-bold tracking-wider uppercase">Portal Santri</span>
+    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
+           class="fixed lg:static inset-y-0 left-0 w-64 bg-white border-r border-gray-200 shadow-xl lg:shadow-sm flex flex-col z-50 transition-transform duration-300 ease-in-out flex-shrink-0">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="{{ asset('images/logo/logo.png') }}" alt="Logo Al-Fattah" class="h-10 w-10 object-contain" />
+          <div>
+            <h1 class="text-base font-extrabold text-green-600 tracking-tight leading-tight">Al-Fattah</h1>
+            <span class="text-[10px] text-gray-400 font-bold tracking-wider uppercase">Portal Santri</span>
+          </div>
         </div>
+        <button @click="sidebarOpen = false" class="lg:hidden text-gray-400 hover:text-gray-700">
+            <span class="iconify text-2xl" data-icon="mdi:close"></span>
+        </button>
       </div>
 
       @php
@@ -122,10 +140,15 @@
     </aside>
 
     <!-- Konten Utama -->
-    <div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col min-w-0">
       <!-- Navbar Header -->
-      <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 z-20 shadow-sm">
-        <h2 class="text-xl font-semibold text-gray-800">@yield('title')</h2>
+      <header class="bg-white border-b border-gray-200 px-4 md:px-6 py-3.5 flex justify-between items-center sticky top-0 z-20 shadow-sm">
+        <div class="flex items-center gap-3">
+          <button @click="sidebarOpen = true" class="lg:hidden p-2 text-gray-600 hover:text-emerald-700 hover:bg-gray-100 rounded-xl transition">
+            <span class="iconify text-2xl" data-icon="mdi:menu"></span>
+          </button>
+          <h2 class="text-base md:text-xl font-bold text-gray-800">@yield('title')</h2>
+        </div>
 
         <div class="flex items-center space-x-4">
           <span class="flex items-center text-gray-700 font-medium text-sm">
@@ -138,18 +161,17 @@
             @csrf
             <button
               type="submit"
-              class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-semibold rounded-lg
-                     hover:from-red-600 hover:to-red-700 shadow-md hover:shadow-lg transition duration-200">
-              <span class="iconify text-white text-sm" data-icon="mdi:logout"></span>
-              Logout
+              class="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold rounded-xl transition">
+              <span class="iconify text-sm" data-icon="mdi:logout"></span>
+              <span class="hidden sm:inline">Logout</span>
             </button>
           </form>
         </div>
       </header>
 
       <!-- Isi Konten -->
-      <main class="flex-1 overflow-y-auto p-8 bg-gray-50">
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-8 transition-all duration-300 hover:shadow-lg">
+      <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-50">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4 md:p-8 transition-all duration-300 hover:shadow-lg">
           @yield('content')
         </div>
       </main>

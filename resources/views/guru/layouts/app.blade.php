@@ -64,12 +64,12 @@
       </div>
 
       <!-- Navigasi Guru -->
-      <nav class="flex-1 px-4 py-5 space-y-2 text-sm overflow-y-auto">
+      <nav class="flex-1 px-4 py-5 space-y-1.5 text-sm overflow-y-auto">
 
         <!-- Dashboard -->
         <a href="{{ route('guru.dashboard') }}"
-          class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition {{ request()->routeIs('guru.dashboard') ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800' }}">
-          <span class="iconify text-xl" data-icon="mdi:view-dashboard-outline"></span>
+          class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('guru.dashboard') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-green-600" data-icon="mdi:view-dashboard"></span>
           <span>Dashboard Guru</span>
         </a>
 
@@ -79,22 +79,22 @@
 
         <!-- 1. Input Nilai Siswa/Santri -->
         <a href="{{ route('guru.nilai.index') }}"
-          class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition {{ request()->routeIs('guru.nilai.*') ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800' }}">
-          <span class="iconify text-xl" data-icon="mdi:pencil-ruler"></span>
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('guru.nilai.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-amber-500" data-icon="mdi:pencil-ruler"></span>
           <span>Input Nilai Santri</span>
         </a>
 
         <!-- 2. Input Absensi Siswa/Santri -->
         <a href="{{ route('guru.absensi.index') }}"
-          class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition {{ request()->routeIs('guru.absensi.*') ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800' }}">
-          <span class="iconify text-xl" data-icon="mdi:calendar-check"></span>
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('guru.absensi.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-teal-600" data-icon="mdi:calendar-check"></span>
           <span>Input Absensi Santri</span>
         </a>
 
         <!-- 3. Rekap Nilai Siswa/Santri -->
         <a href="{{ route('guru.rekap.index') }}"
-          class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition {{ request()->routeIs('guru.rekap.*') ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-800' }}">
-          <span class="iconify text-xl" data-icon="mdi:file-chart-outline"></span>
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('guru.rekap.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-indigo-600" data-icon="mdi:file-chart-outline"></span>
           <span>Rekap Nilai Mapel & Kelas</span>
         </a>
 
