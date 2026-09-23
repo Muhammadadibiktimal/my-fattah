@@ -9,7 +9,11 @@ sed -i "s/80/${PORT}/g" /etc/apache2/sites-available/000-default.conf /etc/apach
 php artisan key:generate --force || true
 touch /var/www/html/database/database.sqlite || true
 php artisan migrate:fresh --seed --force || true
-php artisan storage:link || true
+php artisan storage:link --force || true
+
+# Disable mpm_event & mpm_worker secara eksplisit di runtime, enable mpm_prefork
+a2dismod mpm_event mpm_worker || true
+a2enmod mpm_prefork || true
 
 # Jalankan Apache Web Server
 exec apache2-foreground
