@@ -52,10 +52,14 @@
             <div class="p-6 rounded-2xl border 
                 {{ ($status == 'Terverifikasi' || $status == 'lulus') ? 'bg-green-50 border-green-200 text-green-900' : (($status == 'Ditolak' || $status == 'gagal') ? 'bg-red-50 border-red-200 text-red-900' : 'bg-yellow-50 border-yellow-200 text-yellow-900') }}">
                 @if($status == 'Terverifikasi' || $status == 'lulus')
-                    <h4 class="font-bold text-base mb-1">🎉 Selamat! Berkas Pendaftaran Terverifikasi</h4>
-                    <p class="text-xs leading-relaxed">
-                        Dokumen pendaftaran dan identitas kamu dinyatakan **VALID**. Silakan cetak kartu pendaftaran dan bersiap untuk jadwal pengarahan santri baru.
+                    <h4 class="font-bold text-base mb-1">🎉 Selamat! Berkas Pendaftaran Disetujui (Approved)</h4>
+                    <p class="text-xs leading-relaxed mb-4">
+                        Dokumen pendaftaran dan identitas kamu telah diverifikasi dan dinyatakan **VALID / LULUS** oleh Admin. Silakan lanjutkan ke tahap pembayaran pendaftaran untuk menyelesaikan registrasi.
                     </p>
+                    <a href="{{ route('user.pembayaran') }}" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs inline-flex items-center gap-2 shadow-md transition">
+                        <span class="iconify text-base" data-icon="mdi:credit-card-fast"></span>
+                        Lanjutkan Pembayaran (Midtrans)
+                    </a>
                 @elseif($status == 'Ditolak' || $status == 'gagal')
                     <h4 class="font-bold text-base mb-1">⚠️ Mohon Maaf, Berkas Belum Terverifikasi</h4>
                     <p class="text-xs leading-relaxed">

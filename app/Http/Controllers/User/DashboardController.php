@@ -249,7 +249,40 @@ class DashboardController extends Controller
     {
         [$user, $santri, $pendaftar] = $this->getSantriData();
 
-        return view('user.pembayaran', compact('user', 'santri', 'pendaftar'));
+        $snapToken = null;
+        if ($pendaftar && ($pendaftar->status == 'Terverifikasi' || $pendaftar->status == 'lulus') && $pendaftar->status_bayar != 'settlement') {
+            if ($pendaftar->snap_token) {
+                $snapToken = $pendaftar->snap_token;
+            } else {
+                \Midtrans\Config::$serverKey = config('midtrans.server_key');
+                \Midtrans\Config::$isProduction = config('midtrans.is_production');
+                \Midtrans\Config::$isSanitized = config('midtrans.is_sanitized', true);
+                \Midtrans\Config::$is3ds = config('midtrans.is_3ds', true);
+
+                $params = [
+                    'transaction_details' => [
+                        'order_id' => $pendaftar->order_id ?: ('PSB-' . time()),
+                        'gross_amount' => 200000,
+                    ],
+                    'customer_details' => [
+                        'first_name' => $pendaftar->nama ?: $user->name,
+                        'email' => $pendaftar->email ?: $user->email,
+                        'phone' => $pendaftar->no_hp ?: $user->phone,
+                    ],
+                ];
+
+                try {
+                    $snapToken = \Midtrans\Snap::getSnapToken($params);
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::warning("Midtrans Snap Error in DashboardController: " . $e->getMessage());
+                    $snapToken = 'mock-snap-' . md5($pendaftar->order_id ?: time());
+                }
+
+                $pendaftar->update(['snap_token' => $snapToken]);
+            }
+        }
+
+        return view('user.pembayaran', compact('user', 'santri', 'pendaftar', 'snapToken'));
     }
 
     /**

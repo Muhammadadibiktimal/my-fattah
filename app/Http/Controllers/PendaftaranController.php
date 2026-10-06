@@ -92,12 +92,13 @@ class PendaftaranController extends Controller
         // Buat order ID unik
         $orderId = 'PSB-' . time();
 
-        // Simpan ke database dengan seluruh data lengkap
+        // Simpan ke database dengan status awal Menunggu Verifikasi
         $pendaftar = Pendaftar::create([
             'nama' => $request->nama,
             'email' => $request->email,
             'no_hp' => $telepon,
             'order_id' => $orderId,
+            'status' => 'Pending',
             'status_bayar' => 'pending',
             'nik' => $request->nik,
             'nisn' => $request->nisn,
@@ -120,30 +121,16 @@ class PendaftaranController extends Controller
             'file_foto' => $fileFoto,
         ]);
 
-        // Data transaksi ke Midtrans
-        $params = [
-            'transaction_details' => [
-                'order_id' => $orderId,
-                'gross_amount' => 200000,
-            ],
-            'customer_details' => [
-                'first_name' => $pendaftar->nama,
-                'email' => $pendaftar->email,
-                'phone' => $pendaftar->no_hp,
-            ],
-        ];
+        // Otomatis buatkan akun User & Santri agar pendaftar bisa langsung login
+        $user = $this->buatAkunUser($pendaftar);
 
-        try {
-            $snapToken = Snap::getSnapToken($params);
-        } catch (\Exception $e) {
-            Log::warning("Midtrans Snap Error (Fallback to mock sandbox token): " . $e->getMessage());
-            $snapToken = 'mock-snap-' . md5($orderId);
+        // Auto login akun pendaftar jika user berhasil dibuat
+        if ($user) {
+            \Illuminate\Support\Facades\Auth::login($user);
+            return redirect()->route('user.status')->with('success', 'Pendaftaran Berhasil! Data & berkas dokumen Anda telah disimpan. Silakan tunggu proses verifikasi berkas oleh Tim Admin Al-Fattah sebelum melakukan pembayaran.');
         }
 
-        // Simpan snap token
-        $pendaftar->update(['snap_token' => $snapToken]);
-
-        return view('pendaftaran.bayar', compact('pendaftar', 'snapToken'));
+        return redirect()->route('login')->with('success', 'Pendaftaran Berhasil! Silakan login untuk memantau status verifikasi berkas dokumen Anda.');
     }
 
     // 🔹 Midtrans Notification Handler
@@ -205,13 +192,14 @@ class PendaftaranController extends Controller
     }
 
     // 🔹 Membuat akun user otomatis
-    private function buatAkunUser(Pendaftar $pendaftar)
+    public function buatAkunUser(Pendaftar $pendaftar)
     {
-        if (User::where('email', $pendaftar->email)->exists()) {
-            return;
+        $existingUser = User::where('email', $pendaftar->email)->first();
+        if ($existingUser) {
+            return $existingUser;
         }
 
-        $passwordPlain = Str::random(8);
+        $passwordPlain = 'password';
 
         $user = User::create([
             'name' => $pendaftar->nama,
@@ -285,6 +273,8 @@ class PendaftaranController extends Controller
         } catch (\Exception $e) {
             Log::error("❌ Gagal kirim WA: " . $e->getMessage());
         }
+
+        return $user;
     }
 
     // 🔹 Normalisasi nomor telepon
