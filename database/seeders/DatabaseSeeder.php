@@ -46,11 +46,11 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 3. Guru User
+        // 3. Guru Default (Ust Mohamad Paisal)
         $guru = User::firstOrCreate(
             ['email' => 'guru@gmail.com'],
             [
-                'name' => 'Ustadz Ahmad Fauzi, S.Pd.I',
+                'name' => 'Ust Mohamad Paisal',
                 'password' => bcrypt('password123'),
                 'role' => 'guru'
             ]
@@ -66,37 +66,12 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 5. Data Kelas
-        $kelas7A = \App\Models\Kelas::firstOrCreate(
-            ['nama_kelas' => '7A'],
-            ['tingkat' => '7', 'wali_kelas' => 'Ustadz Ahmad Fauzi, S.Pd.I']
-        );
-        $kelas7B = \App\Models\Kelas::firstOrCreate(
-            ['nama_kelas' => '7B'],
-            ['tingkat' => '7', 'wali_kelas' => 'Ustadzah Siti Aminah, S.Pd.']
-        );
-        $kelas8A = \App\Models\Kelas::firstOrCreate(
-            ['nama_kelas' => '8A'],
-            ['tingkat' => '8', 'wali_kelas' => 'Ustadz Hasan Basri, Lc.']
-        );
+        // 5. Seed Jadwal, Kelas, Guru Resmi, dan 42 Mata Pelajaran
+        $this->call(JadwalSeeder::class);
 
-        // 6. Data Mata Pelajaran
-        $mapelQuran = \App\Models\Mapel::firstOrCreate(
-            ['kode_mapel' => 'QUR'],
-            ['nama_mapel' => "Al-Qur'an Hadits", 'kkm' => 75]
-        );
-        $mapelFiqih = \App\Models\Mapel::firstOrCreate(
-            ['kode_mapel' => 'FIQ'],
-            ['nama_mapel' => 'Fiqih Ibadah', 'kkm' => 75]
-        );
-        $mapelArab = \App\Models\Mapel::firstOrCreate(
-            ['kode_mapel' => 'ARB'],
-            ['nama_mapel' => 'Bahasa Arab', 'kkm' => 70]
-        );
-        $mapelMtk = \App\Models\Mapel::firstOrCreate(
-            ['kode_mapel' => 'MTK'],
-            ['nama_mapel' => 'Matematika', 'kkm' => 70]
-        );
+        $kelasI = \App\Models\Kelas::where('nama_kelas', 'Kelas I')->first();
+        $kelasII = \App\Models\Kelas::where('nama_kelas', 'Kelas II')->first();
+        $mapelQuran = \App\Models\Mapel::where('kode_mapel', '8')->first() ?? \App\Models\Mapel::first();
 
         // 7. Data Santri Aktif
         $santri1 = \App\Models\Santri::firstOrCreate(
@@ -104,7 +79,7 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id' => $userPendaftar->id,
                 'nama_lengkap' => 'Ahmad Santri Calon',
-                'kelas_id' => $kelas7A->id,
+                'kelas_id' => $kelasI->id,
                 'jenis_kelamin' => 'Laki-laki',
                 'no_hp' => '081234567890',
                 'alamat' => 'Tigaraksa, Tangerang',
@@ -116,7 +91,7 @@ class DatabaseSeeder extends Seeder
             ['nisn' => '0091234502'],
             [
                 'nama_lengkap' => 'Muhammad Bilal Al-Ghifari',
-                'kelas_id' => $kelas7A->id,
+                'kelas_id' => $kelasI->id,
                 'jenis_kelamin' => 'Laki-laki',
                 'no_hp' => '081298765432',
                 'alamat' => 'Balaraja, Tangerang',
@@ -128,7 +103,7 @@ class DatabaseSeeder extends Seeder
             ['nisn' => '0091234503'],
             [
                 'nama_lengkap' => 'Fatimah Az-Zahra',
-                'kelas_id' => $kelas7A->id,
+                'kelas_id' => $kelasI->id,
                 'jenis_kelamin' => 'Perempuan',
                 'no_hp' => '081377889900',
                 'alamat' => 'Cikupa, Tangerang',
@@ -140,7 +115,7 @@ class DatabaseSeeder extends Seeder
             ['nisn' => '0091234504'],
             [
                 'nama_lengkap' => 'Zaid bin Tsabit',
-                'kelas_id' => $kelas7B->id,
+                'kelas_id' => $kelasII->id,
                 'jenis_kelamin' => 'Laki-laki',
                 'no_hp' => '081512348899',
                 'alamat' => 'Panongan, Tangerang',
@@ -152,7 +127,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Nilai::updateOrCreate(
             ['santri_id' => $santri1->id, 'mapel_id' => $mapelQuran->id, 'semester' => 'Ganjil', 'tahun_ajaran' => '2026/2027'],
             [
-                'kelas_id' => $kelas7A->id,
+                'kelas_id' => $kelasI->id,
                 'guru_id' => $guru->id,
                 'nilai_tugas' => 88,
                 'nilai_uts' => 85,
@@ -165,7 +140,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Nilai::updateOrCreate(
             ['santri_id' => $santri2->id, 'mapel_id' => $mapelQuran->id, 'semester' => 'Ganjil', 'tahun_ajaran' => '2026/2027'],
             [
-                'kelas_id' => $kelas7A->id,
+                'kelas_id' => $kelasI->id,
                 'guru_id' => $guru->id,
                 'nilai_tugas' => 80,
                 'nilai_uts' => 78,
@@ -178,7 +153,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Nilai::updateOrCreate(
             ['santri_id' => $santri3->id, 'mapel_id' => $mapelQuran->id, 'semester' => 'Ganjil', 'tahun_ajaran' => '2026/2027'],
             [
-                'kelas_id' => $kelas7A->id,
+                'kelas_id' => $kelasI->id,
                 'guru_id' => $guru->id,
                 'nilai_tugas' => 92,
                 'nilai_uts' => 90,
@@ -192,15 +167,15 @@ class DatabaseSeeder extends Seeder
         $today = date('Y-m-d');
         \App\Models\Absensi::updateOrCreate(
             ['santri_id' => $santri1->id, 'tanggal' => $today],
-            ['kelas_id' => $kelas7A->id, 'guru_id' => $guru->id, 'status' => 'Hadir', 'keterangan' => 'Tepat waktu']
+            ['kelas_id' => $kelasI->id, 'guru_id' => $guru->id, 'status' => 'Hadir', 'keterangan' => 'Tepat waktu']
         );
         \App\Models\Absensi::updateOrCreate(
             ['santri_id' => $santri2->id, 'tanggal' => $today],
-            ['kelas_id' => $kelas7A->id, 'guru_id' => $guru->id, 'status' => 'Hadir', 'keterangan' => 'Tepat waktu']
+            ['kelas_id' => $kelasI->id, 'guru_id' => $guru->id, 'status' => 'Hadir', 'keterangan' => 'Tepat waktu']
         );
         \App\Models\Absensi::updateOrCreate(
             ['santri_id' => $santri3->id, 'tanggal' => $today],
-            ['kelas_id' => $kelas7A->id, 'guru_id' => $guru->id, 'status' => 'Izin', 'keterangan' => 'Urusan keluarga']
+            ['kelas_id' => $kelasI->id, 'guru_id' => $guru->id, 'status' => 'Izin', 'keterangan' => 'Urusan keluarga']
         );
 
         // 10. Sample Data Pendaftar & Midtrans

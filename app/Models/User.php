@@ -31,6 +31,11 @@ class User extends Authenticatable
         return $this->hasOne(Santri::class);
     }
 
+    public function jadwals()
+    {
+        return $this->hasMany(Jadwal::class, 'guru_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

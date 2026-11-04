@@ -10,6 +10,7 @@ use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Absensi;
+use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -140,11 +141,31 @@ class DashboardController extends Controller
     /**
      * Jadwal Pelajaran Santri & Ringkasan Kehadiran
      */
-    public function jadwal()
+    public function jadwal(Request $request)
     {
         [$user, $santri, $pendaftar] = $this->getSantriData();
-        $kelas = $santri?->kelas;
-        $mapelList = Mapel::all();
+
+        $kelasList = Kelas::whereIn('nama_kelas', ['Kelas I', 'Kelas II', 'Kelas III', 'Kelas IV', 'Kelas V', 'Kelas VI'])
+            ->orderBy('id')
+            ->get();
+        if ($kelasList->isEmpty()) {
+            $kelasList = Kelas::all();
+        }
+
+        $selectedKelasId = $request->query('kelas_id', $santri?->kelas_id);
+        $kelas = $selectedKelasId ? Kelas::find($selectedKelasId) : null;
+        if (!$kelas) {
+            $kelas = $santri?->kelas ?? $kelasList->first();
+        }
+
+        // Ambil jadwal pelajaran terstruktur untuk kelas terpilih
+        $jadwalGrouped = Jadwal::with(['mapel', 'guru'])
+            ->where('kelas_id', $kelas?->id)
+            ->orderBy('jam_ke')
+            ->get()
+            ->groupBy('hari');
+
+        $mapelList = Mapel::orderByRaw('CAST(kode_mapel as UNSIGNED) ASC')->get();
 
         // Pastikan ada riwayat absensi santri agar tampilan lengkap
         if ($santri && $santri->absensi()->count() <= 1) {
@@ -163,7 +184,7 @@ class DashboardController extends Controller
                     'santri_id' => $santri->id,
                     'tanggal' => $item['tanggal'],
                 ], [
-                    'kelas_id' => $santri->kelas_id,
+                    'kelas_id' => $santri->kelas_id ?? $kelas?->id,
                     'status' => $item['status'],
                     'keterangan' => $item['keterangan'],
                 ]);
@@ -179,7 +200,7 @@ class DashboardController extends Controller
         $persentase = $totalPertemuan > 0 ? round(($totalHadir / $totalPertemuan) * 100, 1) : 100;
 
         return view('user.jadwal', compact(
-            'user', 'santri', 'pendaftar', 'kelas', 'mapelList',
+            'user', 'santri', 'pendaftar', 'kelas', 'kelasList', 'jadwalGrouped', 'mapelList',
             'absensiList', 'totalPertemuan', 'totalHadir', 'totalSakit', 'totalIzin', 'totalAlpa', 'persentase'
         ));
     }

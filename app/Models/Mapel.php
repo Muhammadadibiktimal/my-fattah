@@ -23,4 +23,9 @@ class Mapel extends Model
     {
         return $this->hasMany(Nilai::class, 'mapel_id');
     }
+
+    public function jadwals()
+    {
+        return $this->hasMany(Jadwal::class, 'mapel_id');
+    }
 }

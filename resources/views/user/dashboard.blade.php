@@ -46,10 +46,10 @@
                 </div>
             </div>
             <div class="text-2xl font-extrabold text-gray-800">
-                {{ $kelas ? 'Kelas ' . $kelas->nama_kelas : 'Kelas 7A' }}
+                {{ $kelas ? (str_starts_with($kelas->nama_kelas, 'Kelas') ? $kelas->nama_kelas : 'Kelas ' . $kelas->nama_kelas) : 'Kelas I' }}
             </div>
             <p class="text-xs text-gray-500 mt-1">
-                Wali Kelas: <span class="font-semibold text-emerald-700">{{ $kelas->wali_kelas ?? 'Ustadz Ahmad Fauzi, S.Pd.I' }}</span>
+                Wali Kelas: <span class="font-semibold text-emerald-700">{{ $kelas->wali_kelas ?? 'Ust Mohamad Paisal' }}</span>
             </p>
         </div>
 
@@ -183,7 +183,7 @@
             <div class="flex items-center justify-between pb-3 border-b border-gray-100">
                 <div class="flex items-center gap-2">
                     <span class="iconify text-xl text-emerald-600" data-icon="mdi:book-open-page-variant"></span>
-                    <h3 class="font-bold text-gray-800 text-sm">Mata Pelajaran Kelas {{ $kelas->nama_kelas ?? '7A' }}</h3>
+                    <h3 class="font-bold text-gray-800 text-sm">Mata Pelajaran {{ $kelas ? (str_starts_with($kelas->nama_kelas, 'Kelas') ? $kelas->nama_kelas : 'Kelas ' . $kelas->nama_kelas) : 'Kelas I' }}</h3>
                 </div>
                 <a href="{{ route('user.jadwal') }}" class="text-xs text-emerald-700 font-bold hover:underline">
                     Jadwal Lengkap →
@@ -223,7 +223,7 @@
                 <h4 class="text-lg font-extrabold">{{ $santri->nama_lengkap ?? Auth::user()->name }}</h4>
                 <p class="font-mono text-xs text-emerald-100 mt-0.5">NISN: {{ $santri->nisn ?? $pendaftar->nisn ?? '21201' }}</p>
                 <div class="mt-4 pt-3 border-t border-emerald-600/50 flex items-center justify-between text-xs">
-                    <span class="text-emerald-200">Kelas {{ $kelas->nama_kelas ?? '7A' }}</span>
+                    <span class="text-emerald-200">{{ $kelas ? (str_starts_with($kelas->nama_kelas, 'Kelas') ? $kelas->nama_kelas : 'Kelas ' . $kelas->nama_kelas) : 'Kelas I' }}</span>
                     <a href="{{ route('user.bukti') }}" class="px-3 py-1.5 bg-white text-emerald-800 rounded-lg font-bold hover:bg-emerald-50 transition shadow-sm flex items-center gap-1">
                         <span class="iconify" data-icon="mdi:printer"></span> Cetak KTS
                     </a>
