@@ -53,9 +53,9 @@
           <span>Dashboard Utama</span>
         </a>
 
-        <!-- VERIFIKASI DOKUMEN & PSB -->
+        <!-- PENERIMAAN SANTRI BARU (PSB) -->
         <div class="pt-3 pb-1">
-          <span class="px-4 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Validasi & PSB Online</span>
+          <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Penerimaan Santri Baru (PSB)</span>
         </div>
 
         <a href="{{ route('admin.pendaftar.verifikasi') }}"
@@ -64,56 +64,54 @@
             <span class="iconify text-xl text-indigo-600" data-icon="mdi:check-decagram"></span>
             <span>Verifikasi Dokumen</span>
           </div>
-          <span class="px-2 py-0.5 text-[10px] bg-indigo-100 text-indigo-700 font-bold rounded-full">Validator</span>
+          <span class="px-2 py-0.5 text-[9px] bg-indigo-100 text-indigo-700 font-bold rounded-full">Validator</span>
         </a>
 
         <a href="{{ route('admin.pendaftar.index') }}"
-          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.pendaftar.index') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.pendaftar.index') || request()->routeIs('admin.pendaftar.arsip') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
           <span class="iconify text-xl text-green-600" data-icon="mdi:format-list-bulleted"></span>
-          <span>Semua Pendaftar</span>
+          <span>Data Calon Santri</span>
         </a>
 
-        <!-- PEMBAYARAN MIDTRANS -->
         <a href="{{ route('admin.transaksi.index') }}"
           class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.transaksi.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
           <span class="iconify text-xl text-emerald-600" data-icon="mdi:credit-card-fast-outline"></span>
-          <span>Pembayaran Midtrans</span>
-        </a>
-
-        <a href="{{ route('admin.pendaftar.arsip') }}"
-          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.pendaftar.arsip') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-          <span class="iconify text-xl text-green-600" data-icon="mdi:archive-outline"></span>
-          <span>Arsip Keputusan</span>
+          <span>Transaksi Midtrans</span>
         </a>
 
         <!-- DATA AKADEMIK & KESISWAAN -->
         <div class="pt-4 pb-1">
-          <span class="px-4 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Kesiswaan & Akademik</span>
+          <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Kesiswaan & Akademik</span>
         </div>
 
         <a href="{{ route('admin.santri.index') }}"
           class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.santri.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-          <span class="iconify text-xl text-green-600" data-icon="mdi:account-school-outline"></span>
+          <span class="iconify text-xl text-blue-600" data-icon="mdi:account-school-outline"></span>
           <span>Data Santri Aktif</span>
         </a>
 
         <a href="{{ route('admin.guru.index') }}"
           class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.guru.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-          <span class="iconify text-xl text-green-600" data-icon="mdi:teach"></span>
+          <span class="iconify text-xl text-pink-600" data-icon="mdi:teach"></span>
           <span>Data Dewan Guru</span>
         </a>
 
         <a href="{{ route('admin.kelas.index') }}"
           class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.kelas.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-          <span class="iconify text-xl text-green-600" data-icon="mdi:google-classroom"></span>
-          <span>Data Kelas (Rombel)</span>
+          <span class="iconify text-xl text-amber-600" data-icon="mdi:google-classroom"></span>
+          <span>Data Rombel (Kelas)</span>
         </a>
 
-        <!-- 3 MENU MAPEL (SMP, SMA, SMK) -->
         <a href="{{ route('admin.mapel.index') }}"
           class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.mapel.*') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-          <span class="iconify text-xl text-green-600" data-icon="mdi:book-open-page-variant-outline"></span>
-          <span>Mapel (SMP, SMA, SMK)</span>
+          <span class="iconify text-xl text-purple-600" data-icon="mdi:book-open-page-variant-outline"></span>
+          <span>Mata Pelajaran (42 Mapel)</span>
+        </a>
+
+        <a href="{{ route('user.jadwal') }}" target="_blank"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700">
+          <span class="iconify text-xl text-teal-600" data-icon="mdi:calendar-clock"></span>
+          <span>Jadwal Pelajaran KBM</span>
         </a>
 
         <!-- KELOLA KONTEN WEBSITE -->

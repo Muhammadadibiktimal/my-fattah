@@ -41,21 +41,61 @@
       </div>
 
       <!-- Navigasi Kepsek -->
-      <nav class="flex-1 px-4 py-6 space-y-3 text-sm overflow-y-auto">
-        <div class="pb-1">
-          <span class="px-4 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Laporan & Eksekutif</span>
-        </div>
-
+      <nav class="flex-1 px-4 py-4 space-y-1.5 text-sm overflow-y-auto">
         <a href="{{ route('kepsek.dashboard') }}"
           class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('kepsek.dashboard') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-          <span class="iconify text-xl text-green-600" data-icon="mdi:chart-box-outline"></span>
-          <span>Laporan Ringkasan</span>
+          <span class="iconify text-xl text-green-600" data-icon="mdi:view-dashboard"></span>
+          <span>Dashboard Supervisi</span>
         </a>
 
+        <div class="pt-3 pb-1">
+          <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Supervisi Pendidikan</span>
+        </div>
+
+        <a href="{{ route('kepsek.laporan.pendaftar') }}"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('kepsek.laporan.pendaftar') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-emerald-600" data-icon="mdi:account-school-outline"></span>
+          <span>Laporan PPDB Masuk</span>
+        </a>
+
+        <a href="{{ route('kepsek.laporan.santri') }}"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('kepsek.laporan.santri') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-blue-600" data-icon="mdi:account-group"></span>
+          <span>Santri Aktif & Rombel</span>
+        </a>
+
+        <a href="{{ route('kepsek.laporan.nilai') }}"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('kepsek.laporan.nilai') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-purple-600" data-icon="mdi:certificate"></span>
+          <span>Laporan Nilai & Rapor</span>
+        </a>
+
+        <a href="{{ route('kepsek.laporan.absensi') }}"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('kepsek.laporan.absensi') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-teal-600" data-icon="mdi:calendar-check-outline"></span>
+          <span>Presensi & Kehadiran</span>
+        </a>
+
+        <a href="{{ route('kepsek.laporan.guru') }}"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('kepsek.laporan.guru') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+          <span class="iconify text-xl text-pink-600" data-icon="mdi:teach"></span>
+          <span>Dewan Guru Pengampu</span>
+        </a>
+
+        <div class="pt-3 pb-1">
+          <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Unduh Rekapitulasi</span>
+        </div>
+
         <a href="{{ route('kepsek.laporan.exportExcel') }}"
-          class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700">
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700">
           <span class="iconify text-xl text-green-600" data-icon="mdi:file-excel-box-outline"></span>
           <span>Export Data Excel</span>
+        </a>
+
+        <a href="{{ route('kepsek.laporan.exportPdf') }}" target="_blank"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700">
+          <span class="iconify text-xl text-red-600" data-icon="mdi:file-pdf-box"></span>
+          <span>Download PDF Resmi</span>
         </a>
       </nav>
 

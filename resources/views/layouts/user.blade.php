@@ -46,12 +46,25 @@
         $isSantriAktif = $santriUser || ($pendaftarUser && ($pendaftarUser->status == 'Terverifikasi' || $pendaftarUser->status_bayar == 'settlement'));
       @endphp
 
+      <!-- Header Indikator Status Akun -->
+      <div class="px-4 py-3 {{ $isSantriAktif ? 'bg-emerald-50 border-b border-emerald-100' : 'bg-amber-50 border-b border-amber-100' }} flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full {{ $isSantriAktif ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500' }}"></span>
+          <span class="text-[11px] font-extrabold uppercase tracking-wider {{ $isSantriAktif ? 'text-emerald-900' : 'text-amber-900' }}">
+            {{ $isSantriAktif ? 'Portal Akademik' : 'Portal PSB Online' }}
+          </span>
+        </div>
+        <span class="px-2 py-0.5 text-[9px] font-black rounded-full uppercase tracking-wider {{ $isSantriAktif ? 'bg-emerald-600 text-white' : 'bg-amber-500 text-white' }}">
+          {{ $isSantriAktif ? 'Santri Aktif' : 'Calon Santri' }}
+        </span>
+      </div>
+
       <!-- Navigasi Santri -->
-      <nav class="flex-1 px-4 py-6 space-y-1.5 text-sm overflow-y-auto">
+      <nav class="flex-1 px-4 py-5 space-y-1.5 text-sm overflow-y-auto">
         @if($isSantriAktif)
           <div class="pb-1 pt-1">
-            <span class="px-4 text-[10px] font-bold text-emerald-800 bg-emerald-100/70 px-2 py-0.5 rounded-full uppercase tracking-wider">
-              Akademik Santri Aktif
+            <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+              Aktivitas Santri
             </span>
           </div>
 
@@ -64,19 +77,19 @@
           <a href="{{ route('user.jadwal') }}"
             class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.jadwal') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
             <span class="iconify text-xl text-emerald-600" data-icon="mdi:calendar-clock"></span>
-            <span>Jadwal & Kelas</span>
+            <span>Jadwal Pelajaran KBM</span>
           </a>
 
           <a href="{{ route('user.kehadiran') }}"
             class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.kehadiran') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
             <span class="iconify text-xl text-teal-600" data-icon="mdi:calendar-check-outline"></span>
-            <span>Kehadiran</span>
+            <span>Kehadiran Presensi</span>
           </a>
 
           <a href="{{ route('user.nilai') }}"
             class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.nilai') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
             <span class="iconify text-xl text-amber-500" data-icon="mdi:certificate"></span>
-            <span>Nilai & Rapor</span>
+            <span>Nilai & Rapor Belajar</span>
           </a>
 
           <a href="{{ route('user.pembayaran') }}"
@@ -85,50 +98,56 @@
             <span>Status Pembayaran</span>
           </a>
 
-          <div class="pb-1 pt-4">
+          <div class="pb-1 pt-3">
             <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-              Biodata & Dokumen
+              Profil & Identitas
             </span>
           </div>
 
           <a href="{{ route('user.biodata') }}"
             class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.biodata') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
             <span class="iconify text-xl text-indigo-600" data-icon="mdi:card-account-details-outline"></span>
-            <span>Biodata & Berkas</span>
+            <span>Biodata & Dokumen</span>
           </a>
 
           <a href="{{ route('user.bukti') }}"
             class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.bukti') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
             <span class="iconify text-xl text-purple-600" data-icon="mdi:badge-account-outline"></span>
-            <span>Kartu Santri</span>
+            <span>Kartu Tanda Santri (KTS)</span>
           </a>
         @else
           <div class="pb-1">
-            <span class="px-4 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Tahapan Pendaftaran</span>
+            <span class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Tahapan Pendaftaran (PSB)</span>
           </div>
 
           <a href="{{ route('user.dashboard') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.dashboard') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+            class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.dashboard') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
             <span class="iconify text-xl text-green-600" data-icon="mdi:view-dashboard"></span>
-            <span>Beranda Pendaftaran</span>
+            <span>1. Beranda Pendaftaran</span>
           </a>
 
           <a href="{{ route('user.data') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.data') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-            <span class="iconify text-xl text-green-600" data-icon="mdi:square-edit-outline"></span>
-            <span>Lengkapi Data</span>
+            class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.data') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+            <span class="iconify text-xl text-indigo-600" data-icon="mdi:square-edit-outline"></span>
+            <span>2. Lengkapi Biodata & Berkas</span>
           </a>
 
           <a href="{{ route('user.status') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.status') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-            <span class="iconify text-xl text-green-600" data-icon="mdi:list-status"></span>
-            <span>Status Seleksi</span>
+            class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.status') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+            <span class="iconify text-xl text-amber-500" data-icon="mdi:list-status"></span>
+            <span>3. Status Verifikasi Berkas</span>
+          </a>
+
+          <a href="{{ route('user.pembayaran') }}"
+            class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.pembayaran') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+            <span class="iconify text-xl text-emerald-600" data-icon="mdi:credit-card-fast-outline"></span>
+            <span>4. Pembayaran (Midtrans)</span>
           </a>
 
           <a href="{{ route('user.bukti') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.bukti') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
-            <span class="iconify text-xl text-green-600" data-icon="mdi:printer"></span>
-            <span>Cetak Bukti</span>
+            class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-semibold transition text-gray-700 hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('user.bukti') ? 'bg-green-50 text-green-700 font-bold border-l-4 border-green-600' : '' }}">
+            <span class="iconify text-xl text-purple-600" data-icon="mdi:printer"></span>
+            <span>5. Cetak Bukti Pendaftaran</span>
           </a>
         @endif
       </nav>

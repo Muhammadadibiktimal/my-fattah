@@ -1,6 +1,6 @@
 @extends('kepsek.layouts.app')
 
-@section('title', 'Laporan Ringkasan Eksekutif PSB')
+@section('title', 'Dashboard Supervisi Kepala Sekolah')
 
 @section('content')
 <div class="space-y-8">
@@ -10,120 +10,229 @@
         <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
                 <span class="px-3.5 py-1 bg-yellow-400/20 text-yellow-300 border border-yellow-300/30 rounded-full text-xs font-bold uppercase tracking-wider">
-                    Laporan Eksekutif Real-time
+                    Supervisi Pendidikan & Eksekutif KBM
                 </span>
-                <h1 class="text-3xl font-extrabold mt-3">
+                <h1 class="text-2xl md:text-3xl font-extrabold mt-3">
                     Selamat Datang, {{ Auth::user()->name }}
                 </h1>
-                <p class="text-slate-300 text-sm mt-1">
-                    Berikut statistik & perkembangan pendaftaran calon santri baru Pondok Pesantren Al-Fattah.
+                <p class="text-slate-300 text-sm mt-1 max-w-2xl leading-relaxed">
+                    Portal eksekutif Kepala Sekolah Pondok Pesantren Al-Fattah untuk memantau capaian penerimaan santri baru, aktivitas dewan guru, serta mutu akademik dan kedisiplinan santri.
                 </p>
             </div>
             
-            <div class="flex items-center gap-3">
-                <a href="{{ route('kepsek.laporan.exportExcel') }}" class="px-5 py-3 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold rounded-xl shadow-lg transition flex items-center gap-2 text-sm">
-                    <span class="iconify text-lg" data-icon="mdi:file-excel"></span>
-                    Download Laporan Excel
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="{{ route('kepsek.laporan.exportExcel') }}" class="px-4 py-2.5 bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold rounded-xl shadow-md transition flex items-center gap-1.5 text-xs">
+                    <span class="iconify text-base" data-icon="mdi:file-excel"></span>
+                    Export Excel
+                </a>
+                <a href="{{ route('kepsek.laporan.exportPdf') }}" target="_blank" class="px-4 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold rounded-xl shadow-md transition flex items-center gap-1.5 text-xs">
+                    <span class="iconify text-base" data-icon="mdi:file-pdf-box"></span>
+                    Export PDF
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Cards Stats Ringkasan Laporan -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Total Pendaftar -->
-        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center">
-                    <span class="iconify text-2xl" data-icon="mdi:account-group"></span>
+    <!-- Cards Stats Ringkasan PPDB & Kesiswaan -->
+    <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 px-1">
+            Indikator Penerimaan Santri Baru (PPDB Online)
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- Total Pendaftar -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:account-group"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Total Masuk</span>
                 </div>
-                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Total Masuk</span>
+                <h3 class="text-2xl font-black text-gray-800">{{ $totalPendaftar }}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Calon pendaftar online</p>
             </div>
-            <h3 class="text-3xl font-extrabold text-gray-800">{{ $totalPendaftar }}</h3>
-            <p class="text-xs text-gray-500 mt-1">Santri mendaftar</p>
-        </div>
 
-        <!-- Diterima / Lulus -->
-        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center">
-                    <span class="iconify text-2xl" data-icon="mdi:check-circle-outline"></span>
+            <!-- Diterima / Lulus -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-green-100 text-green-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:check-circle-outline"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Lulus Dokumen</span>
                 </div>
-                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Lulus / Diterima</span>
+                <h3 class="text-2xl font-black text-green-700">{{ $pendaftarLulus }}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Berkas terverifikasi</p>
             </div>
-            <h3 class="text-3xl font-extrabold text-green-600">{{ $pendaftarLulus }}</h3>
-            <p class="text-xs text-gray-500 mt-1">Santri lolos seleksi</p>
-        </div>
 
-        <!-- Dalam Proses -->
-        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-yellow-100 text-yellow-600 flex items-center justify-center">
-                    <span class="iconify text-2xl" data-icon="mdi:clock-outline"></span>
+            <!-- Dalam Proses -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-yellow-100 text-yellow-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:clock-outline"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Proses Verifikasi</span>
                 </div>
-                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Proses Verifikasi</span>
+                <h3 class="text-2xl font-black text-yellow-600">{{ $pendaftarProses }}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Menunggu pemeriksaan</p>
             </div>
-            <h3 class="text-3xl font-extrabold text-yellow-600">{{ $pendaftarProses }}</h3>
-            <p class="text-xs text-gray-500 mt-1">Verifikasi dokumen</p>
-        </div>
 
-        <!-- Tidak Lulus -->
-        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center">
-                    <span class="iconify text-2xl" data-icon="mdi:close-circle-outline"></span>
+            <!-- Lunas Midtrans -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:credit-card-check"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Lunas Biaya PSB</span>
                 </div>
-                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Belum Lolos</span>
+                <h3 class="text-2xl font-black text-emerald-700">{{ $pendaftarLunas }}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Sudah settlement</p>
             </div>
-            <h3 class="text-3xl font-extrabold text-red-600">{{ $pendaftarGagal }}</h3>
-            <p class="text-xs text-gray-500 mt-1">Batal / Gugur</p>
         </div>
     </div>
 
-    <!-- Tabel Preview Laporan Pendaftar Terbaru -->
-    <div class="bg-white rounded-3xl p-8 shadow-md border border-gray-100">
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h3 class="text-xl font-bold text-gray-800">Preview Pendaftar Terbaru</h3>
-                <p class="text-sm text-gray-500">Data 5 pendaftar terkini yang mendaftar ke sistem.</p>
+    <!-- Cards Stats Akademik & Mutu Pembelajaran -->
+    <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 px-1">
+            Indikator Akademik & Tenaga Pendidik
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- Santri Aktif -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:account-school"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Santri Aktif</span>
+                </div>
+                <h3 class="text-2xl font-black text-purple-700">{{ $totalSantri }}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Belajar di pesantren</p>
+            </div>
+
+            <!-- Dewan Guru -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:teach"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Dewan Guru</span>
+                </div>
+                <h3 class="text-2xl font-black text-pink-700">{{ $totalGuru }}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Ustadz & Ustadzah</p>
+            </div>
+
+            <!-- Rata-rata Nilai -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:certificate"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Rata-rata Nilai</span>
+                </div>
+                <h3 class="text-2xl font-black text-indigo-700">{{ $rataRataNilai }}</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Standar mutu KBM</p>
+            </div>
+
+            <!-- Persentase Kehadiran -->
+            <div class="bg-white rounded-2xl p-5 shadow-xs border border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center">
+                        <span class="iconify text-xl" data-icon="mdi:calendar-check"></span>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Tingkat Kehadiran</span>
+                </div>
+                <h3 class="text-2xl font-black text-teal-700">{{ $persentaseKehadiran }}%</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Kedisiplinan harian</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabel 2 Kolom: Pendaftar Terkini & Santri Terkini -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Pendaftar Baru -->
+        <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+                <h4 class="font-bold text-gray-800 text-sm flex items-center gap-2">
+                    <span class="iconify text-emerald-600 text-lg" data-icon="mdi:account-plus"></span>
+                    <span>Pendaftar Masuk Terkini</span>
+                </h4>
+                <a href="{{ route('kepsek.laporan.pendaftar') }}" class="text-xs text-emerald-700 font-bold hover:underline">
+                    Lihat Semua →
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="text-gray-400 font-bold uppercase border-b border-gray-100">
+                            <th class="pb-2">Nama</th>
+                            <th class="pb-2">Jenjang</th>
+                            <th class="pb-2 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        @forelse($pendaftarTerbaru as $p)
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-2.5 font-semibold text-gray-800">{{ $p->nama }}</td>
+                            <td class="py-2.5 text-gray-500">{{ $p->jenjang ?? 'Pesantren' }}</td>
+                            <td class="py-2.5 text-center">
+                                @if(in_array($p->status, ['Terverifikasi', 'lulus']))
+                                    <span class="px-2 py-0.5 bg-green-100 text-green-700 font-bold rounded-full text-[10px]">Lulus</span>
+                                @elseif(in_array($p->status, ['Ditolak', 'gagal']))
+                                    <span class="px-2 py-0.5 bg-red-100 text-red-700 font-bold rounded-full text-[10px]">Gagal</span>
+                                @else
+                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 font-bold rounded-full text-[10px]">Proses</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="3" class="text-center py-4 text-gray-400 italic">Belum ada pendaftar.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-gray-200 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                        <th class="py-3 px-4">Nama Santri</th>
-                        <th class="py-3 px-4">Jenjang</th>
-                        <th class="py-3 px-4">No. HP Wali</th>
-                        <th class="py-3 px-4">Status</th>
-                        <th class="py-3 px-4">Tanggal Daftar</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 text-sm">
-                    @forelse($pendaftarTerbaru as $p)
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="py-3.5 px-4 font-semibold text-gray-800">{{ $p->nama_lengkap ?? $p->nama }}</td>
-                            <td class="py-3.5 px-4"><span class="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold">{{ strtoupper($p->jenjang ?? 'SMP') }}</span></td>
-                            <td class="py-3.5 px-4 text-gray-600">{{ $p->no_hp ?? '-' }}</td>
-                            <td class="py-3.5 px-4">
-                                @if($p->status == 'lulus')
-                                    <span class="px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">LULUS</span>
-                                @elseif($p->status == 'gagal')
-                                    <span class="px-2.5 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold">TIDAK LULUS</span>
-                                @else
-                                    <span class="px-2.5 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold">DALAM PROSES</span>
-                                @endif
+        <!-- Santri Aktif Terkini -->
+        <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+                <h4 class="font-bold text-gray-800 text-sm flex items-center gap-2">
+                    <span class="iconify text-blue-600 text-lg" data-icon="mdi:school"></span>
+                    <span>Santri Aktif Terdaftar</span>
+                </h4>
+                <a href="{{ route('kepsek.laporan.santri') }}" class="text-xs text-blue-700 font-bold hover:underline">
+                    Lihat Semua →
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="text-gray-400 font-bold uppercase border-b border-gray-100">
+                            <th class="pb-2">Nama Santri</th>
+                            <th class="pb-2">Kelas</th>
+                            <th class="pb-2 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        @forelse($santriTerbaru as $s)
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-2.5 font-semibold text-gray-800">{{ $s->nama_lengkap }}</td>
+                            <td class="py-2.5 text-gray-500">{{ $s->kelas?->nama_kelas ?? 'Kelas I' }}</td>
+                            <td class="py-2.5 text-center">
+                                <span class="px-2 py-0.5 bg-blue-100 text-blue-700 font-bold rounded-full text-[10px]">
+                                    {{ $s->status }}
+                                </span>
                             </td>
-                            <td class="py-3.5 px-4 text-gray-500 text-xs">{{ $p->created_at ? $p->created_at->format('d M Y') : '-' }}</td>
                         </tr>
-                    @empty
+                        @empty
                         <tr>
-                            <td colspan="5" class="py-8 text-center text-gray-500 italic">Belum ada data pendaftar masuk.</td>
+                            <td colspan="3" class="text-center py-4 text-gray-400 italic">Belum ada santri aktif.</td>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

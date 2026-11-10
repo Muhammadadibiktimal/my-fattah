@@ -175,12 +175,17 @@ Route::middleware(['auth', 'role:yayasan'])
         Route::get('/laporan/{kategori}/cetak-pdf', [\App\Http\Controllers\Yayasan\LaporanYayasanController::class, 'cetakPdf'])->name('laporan.cetak');
     });
 
-// 🔹 Route untuk Kepala Sekolah (Lihat Laporan & Statistik)
+// 🔹 Route untuk Kepala Sekolah (Supervisi Akademik, Kesiswaan & PPDB)
 Route::middleware(['auth', 'role:kepsek'])
     ->prefix('kepsek')
     ->name('kepsek.')
     ->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Kepsek\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/laporan/pendaftar', [\App\Http\Controllers\Kepsek\DashboardController::class, 'laporanPendaftar'])->name('laporan.pendaftar');
+        Route::get('/laporan/santri', [\App\Http\Controllers\Kepsek\DashboardController::class, 'laporanSantri'])->name('laporan.santri');
+        Route::get('/laporan/nilai', [\App\Http\Controllers\Kepsek\DashboardController::class, 'laporanNilai'])->name('laporan.nilai');
+        Route::get('/laporan/absensi', [\App\Http\Controllers\Kepsek\DashboardController::class, 'laporanAbsensi'])->name('laporan.absensi');
+        Route::get('/laporan/guru', [\App\Http\Controllers\Kepsek\DashboardController::class, 'laporanGuru'])->name('laporan.guru');
         Route::get('/laporan/export-pdf', [\App\Http\Controllers\Admin\PendaftarController::class, 'exportPdf'])->name('laporan.exportPdf');
         Route::get('/laporan/export-excel', [\App\Http\Controllers\Admin\PendaftarController::class, 'export'])->name('laporan.exportExcel');
     });
