@@ -1,108 +1,97 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Edit Data Pengguna')
+
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-blue-50 p-6">
-    <div class="bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl w-full max-w-lg p-8 transform transition-all duration-500 hover:scale-[1.01]">
-        <h2 class="text-3xl font-bold text-center text-blue-700 mb-8">Edit Data User</h2>
+<div class="max-w-2xl mx-auto bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-gray-100">
+    <div class="flex items-center justify-between pb-4 mb-6 border-b border-gray-100">
+        <div>
+            <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+                <span class="iconify text-blue-600 text-2xl" data-icon="mdi:account-edit"></span>
+                Edit Akun Pengguna
+            </h2>
+            <p class="text-xs text-gray-500 mt-1">Perbarui nama, kontak, email, password, atau hak akses akun pengguna.</p>
+        </div>
+        <a href="{{ route('admin.users.index') }}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-xl transition">
+            Kembali
+        </a>
+    </div>
 
-        {{-- ✅ Notifikasi Error --}}
-        @if ($errors->any())
-            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-lg animate-fade-in-down">
-                <strong>Terjadi kesalahan!</strong>
-                <ul class="mt-2 ml-4 list-disc list-inside text-sm">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+    @if ($errors->any())
+        <div class="mb-5 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs space-y-1">
+            @foreach ($errors->all() as $err)
+                <p>• {{ $err }}</p>
+            @endforeach
+        </div>
+    @endif
+
+    <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="space-y-4">
+        @csrf
+        @method('PUT')
+
+        <!-- Nama Lengkap -->
+        <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+                Nama Lengkap <span class="text-red-500">*</span>
+            </label>
+            <input type="text" name="name" value="{{ old('name', $user->name) }}" required
+                   class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm outline-none">
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+                Alamat Email <span class="text-red-500">*</span>
+            </label>
+            <input type="email" name="email" value="{{ old('email', $user->email) }}" required
+                   class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm outline-none">
+        </div>
+
+        <!-- Role & No HP -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+                    Role / Hak Akses <span class="text-red-500">*</span>
+                </label>
+                <select name="role" required
+                        class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm outline-none font-medium">
+                    <option value="guru" {{ old('role', $user->role) == 'guru' ? 'selected' : '' }}>Guru (Pendidik)</option>
+                    <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>Santri / Siswa</option>
+                    <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Administrator</option>
+                    <option value="kepsek" {{ old('role', $user->role) == 'kepsek' ? 'selected' : '' }}>Kepala Sekolah</option>
+                    <option value="yayasan" {{ old('role', $user->role) == 'yayasan' ? 'selected' : '' }}>Ketua Yayasan</option>
+                </select>
             </div>
-        @endif
 
-        {{-- ✅ Form Edit User --}}
-        <form action="{{ route('admin.users.update', $user->id) }}" method="POST" class="space-y-5">
-            @csrf
-            @method('PUT')
-
-            {{-- Nama --}}
-            <div class="group">
-                <label class="block text-gray-700 font-semibold mb-1">Nama Lengkap</label>
-                <input type="text" name="name" value="{{ old('name', $user->name) }}"
-                    class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 group-hover:shadow-md" required>
-            </div>
-
-            {{-- Nomor Telepon --}}
-            <div class="group">
-                <label class="block text-gray-700 font-semibold mb-1">Nomor Telepon</label>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+                    No. Handphone (WhatsApp)
+                </label>
                 <input type="text" name="phone" value="{{ old('phone', $user->phone) }}"
-                    class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 group-hover:shadow-md" placeholder="Masukkan nomor telepon">
+                       placeholder="081234567890"
+                       class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm outline-none">
             </div>
+        </div>
 
-            {{-- Email --}}
-            <div class="group">
-                <label class="block text-gray-700 font-semibold mb-1">Email</label>
-                <input type="email" name="email" value="{{ old('email', $user->email) }}"
-                    class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 group-hover:shadow-md" required>
-            </div>
+        <!-- Password Baru (Opsional) -->
+        <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+                Password Baru <span class="text-xs font-normal text-gray-400 lowercase">(kosongkan jika tidak ingin mengganti)</span>
+            </label>
+            <input type="password" name="password"
+                   placeholder="••••••••"
+                   class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm outline-none">
+        </div>
 
-            {{-- Password --}}
-            <div class="group">
-                <label class="block text-gray-700 font-semibold mb-1">Password Baru <span class="text-sm text-gray-500">(kosongkan jika tidak diubah)</span></label>
-                <input type="password" name="password"
-                    class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 group-hover:shadow-md">
-            </div>
-
-            {{-- Tombol Aksi --}}
-            <div class="flex justify-between items-center pt-4">
-                <a href="{{ route('admin.users.index') }}"
-                    class="px-5 py-2.5 bg-gray-500 text-white font-semibold rounded-xl hover:bg-gray-600 transition-all duration-200 transform hover:-translate-y-0.5">
-                    ← Kembali
-                </a>
-
-                <button type="submit"
-                    class="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all duration-200 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg">
-                    Simpan Perubahan
-                </button>
-            </div>
-        </form>
-    </div>
+        <!-- Tombol Submit -->
+        <div class="pt-4 flex items-center justify-end gap-3">
+            <a href="{{ route('admin.users.index') }}" class="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition">
+                Batal
+            </a>
+            <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-md transition transform hover:-translate-y-0.5">
+                Simpan Perubahan
+            </button>
+        </div>
+    </form>
 </div>
-
-{{-- ✅ Popup Notifikasi --}}
-@if (session('success') || session('error'))
-<div id="popupNotification" class="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 animate-fade-in">
-    <div class="bg-white rounded-2xl shadow-2xl px-8 py-6 text-center transform scale-95 animate-pop-up w-80">
-        @if (session('success'))
-            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-3 text-green-500" width="50" height="50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <h3 class="text-lg font-semibold text-green-700">{{ session('success') }}</h3>
-        @else
-            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-3 text-red-500" width="50" height="50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            <h3 class="text-lg font-semibold text-red-700">{{ session('error') }}</h3>
-        @endif
-    </div>
-</div>
-
-<script>
-    // Tutup popup otomatis setelah 2,5 detik
-    setTimeout(() => {
-        const popup = document.getElementById('popupNotification');
-        if (popup) {
-            popup.classList.add('opacity-0', 'scale-90', 'transition-all', 'duration-500');
-            setTimeout(() => popup.remove(), 500);
-        }
-    }, 2500);
-</script>
-@endif
-
-{{-- Animasi Tailwind Custom --}}
-<style>
-    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fade-in-down { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pop-up { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
-    .animate-fade-in { animation: fade-in 0.4s ease-out; }
-    .animate-fade-in-down { animation: fade-in-down 0.4s ease-out; }
-    .animate-pop-up { animation: pop-up 0.3s ease-out; }
-</style>
 @endsection

@@ -51,32 +51,6 @@
             <p class="text-sm text-gray-500 mt-1">Portal Masuk Santri, Guru & Administrator</p>
         </div>
 
-        <!-- Role Badges & Quick Login Helper -->
-        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3 mb-6">
-            <div class="text-[11px] font-bold text-gray-500 mb-2 uppercase tracking-wide flex items-center gap-1">
-                <span class="iconify text-sm text-green-600" data-icon="mdi:information-outline"></span>
-                Pilih Login Otomatis (Demo/Testing):
-            </div>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <button type="button" onclick="fillLogin('admin@gmail.com', 'password')"
-                        class="px-2 py-1.5 bg-green-50 hover:bg-green-100 border border-green-300 text-green-800 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 shadow-sm">
-                    <span class="iconify" data-icon="mdi:shield-crown"></span> Admin
-                </button>
-                <button type="button" onclick="fillLogin('yayasan@gmail.com', 'password')"
-                        class="px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-800 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 shadow-sm">
-                    <span class="iconify" data-icon="mdi:shield-account"></span> Yayasan
-                </button>
-                <button type="button" onclick="fillLogin('guru@gmail.com', 'password123')"
-                        class="px-2 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 shadow-sm">
-                    <span class="iconify" data-icon="mdi:school"></span> Guru
-                </button>
-                <button type="button" onclick="fillLogin('pendaftar@gmail.com', 'password')"
-                        class="px-2 py-1.5 bg-teal-50 hover:bg-teal-100 border border-teal-300 text-teal-800 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 shadow-sm">
-                    <span class="iconify" data-icon="mdi:account-school"></span> Santri
-                </button>
-            </div>
-        </div>
-
         <!-- Session Status -->
         @if (session('status'))
             <div class="mb-4 text-sm text-green-700 bg-green-100/80 border border-green-300 p-3.5 rounded-xl flex items-center gap-2">
@@ -191,11 +165,6 @@
                 passwordInput.type = isHidden ? 'text' : 'password';
                 eyeIcon.setAttribute('data-icon', isHidden ? 'mdi:eye-off-outline' : 'mdi:eye-outline');
             });
-        }
-
-        function fillLogin(email, password) {
-            document.getElementById('email').value = email;
-            document.getElementById('password').value = password;
         }
     </script>
 </body>
