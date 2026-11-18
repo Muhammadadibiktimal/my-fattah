@@ -348,47 +348,103 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <!-- Kartu Keluarga -->
-                    <div class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600">
-                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center gap-1.5">
-                            <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:file-document-outline"></span>
-                            <span>Kartu Keluarga (KK)</span>
+                    <div id="card_file_kk" class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600 transition-all duration-300">
+                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:file-document-outline"></span>
+                                <span>Kartu Keluarga (KK)</span>
+                            </span>
+                            <span id="badge_file_kk" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/80 dark:text-emerald-200 items-center gap-1">
+                                <span class="iconify" data-icon="mdi:check-circle"></span> Berhasil Dipilih
+                            </span>
                         </label>
-                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Scan atau foto jelas KK asli</p>
-                        <input type="file" name="file_kk" accept=".pdf,.jpg,.jpeg,.png"
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Scan atau foto jelas KK asli (Maks. 5MB)</p>
+                        <input type="file" name="file_kk" id="input_file_kk" accept=".pdf,.jpg,.jpeg,.png"
+                               onchange="handleFileUploadNotice(this, 'file_kk')"
                                class="w-full text-xs text-gray-600 dark:text-gray-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 dark:file:bg-emerald-950 file:text-emerald-800 dark:file:text-emerald-300 hover:file:bg-emerald-200 cursor-pointer">
+                        <div id="info_file_kk" class="hidden mt-2 p-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-lg text-xs text-emerald-900 dark:text-emerald-200 flex items-center justify-between gap-2">
+                            <span class="truncate flex items-center gap-1.5">
+                                <span class="iconify text-emerald-600 text-base shrink-0" data-icon="mdi:file-check"></span>
+                                <span class="filename font-semibold truncate"></span>
+                                <span class="filesize text-[10px] text-emerald-700 dark:text-emerald-400 shrink-0"></span>
+                            </span>
+                            <button type="button" onclick="clearUploadedFile('file_kk')" class="text-red-500 hover:text-red-700 text-xs shrink-0 font-bold ml-1">✕</button>
+                        </div>
                     </div>
 
                     <!-- Akta Kelahiran -->
-                    <div class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600">
-                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center gap-1.5">
-                            <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:certificate-outline"></span>
-                            <span>Akta Kelahiran</span>
+                    <div id="card_file_akta" class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600 transition-all duration-300">
+                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:certificate-outline"></span>
+                                <span>Akta Kelahiran</span>
+                            </span>
+                            <span id="badge_file_akta" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/80 dark:text-emerald-200 items-center gap-1">
+                                <span class="iconify" data-icon="mdi:check-circle"></span> Berhasil Dipilih
+                            </span>
                         </label>
-                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Scan atau foto jelas akta lahir</p>
-                        <input type="file" name="file_akta" accept=".pdf,.jpg,.jpeg,.png"
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Scan atau foto jelas akta lahir (Maks. 5MB)</p>
+                        <input type="file" name="file_akta" id="input_file_akta" accept=".pdf,.jpg,.jpeg,.png"
+                               onchange="handleFileUploadNotice(this, 'file_akta')"
                                class="w-full text-xs text-gray-600 dark:text-gray-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 dark:file:bg-emerald-950 file:text-emerald-800 dark:file:text-emerald-300 hover:file:bg-emerald-200 cursor-pointer">
+                        <div id="info_file_akta" class="hidden mt-2 p-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-lg text-xs text-emerald-900 dark:text-emerald-200 flex items-center justify-between gap-2">
+                            <span class="truncate flex items-center gap-1.5">
+                                <span class="iconify text-emerald-600 text-base shrink-0" data-icon="mdi:file-check"></span>
+                                <span class="filename font-semibold truncate"></span>
+                                <span class="filesize text-[10px] text-emerald-700 dark:text-emerald-400 shrink-0"></span>
+                            </span>
+                            <button type="button" onclick="clearUploadedFile('file_akta')" class="text-red-500 hover:text-red-700 text-xs shrink-0 font-bold ml-1">✕</button>
+                        </div>
                     </div>
 
                     <!-- Ijazah / SKL -->
-                    <div class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600">
-                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center gap-1.5">
-                            <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:school-outline"></span>
-                            <span>Ijazah / SKL (Surat Keterangan Lulus)</span>
+                    <div id="card_file_ijazah" class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600 transition-all duration-300">
+                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:school-outline"></span>
+                                <span>Ijazah / SKL (Surat Keterangan Lulus)</span>
+                            </span>
+                            <span id="badge_file_ijazah" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/80 dark:text-emerald-200 items-center gap-1">
+                                <span class="iconify" data-icon="mdi:check-circle"></span> Berhasil Dipilih
+                            </span>
                         </label>
-                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Scan ijazah atau surat kelulusan sementara</p>
-                        <input type="file" name="file_ijazah" accept=".pdf,.jpg,.jpeg,.png"
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Scan ijazah atau surat kelulusan sementara (Maks. 5MB)</p>
+                        <input type="file" name="file_ijazah" id="input_file_ijazah" accept=".pdf,.jpg,.jpeg,.png"
+                               onchange="handleFileUploadNotice(this, 'file_ijazah')"
                                class="w-full text-xs text-gray-600 dark:text-gray-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 dark:file:bg-emerald-950 file:text-emerald-800 dark:file:text-emerald-300 hover:file:bg-emerald-200 cursor-pointer">
+                        <div id="info_file_ijazah" class="hidden mt-2 p-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-lg text-xs text-emerald-900 dark:text-emerald-200 flex items-center justify-between gap-2">
+                            <span class="truncate flex items-center gap-1.5">
+                                <span class="iconify text-emerald-600 text-base shrink-0" data-icon="mdi:file-check"></span>
+                                <span class="filename font-semibold truncate"></span>
+                                <span class="filesize text-[10px] text-emerald-700 dark:text-emerald-400 shrink-0"></span>
+                            </span>
+                            <button type="button" onclick="clearUploadedFile('file_ijazah')" class="text-red-500 hover:text-red-700 text-xs shrink-0 font-bold ml-1">✕</button>
+                        </div>
                     </div>
 
                     <!-- Pas Foto -->
-                    <div class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600">
-                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center gap-1.5">
-                            <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:camera-account"></span>
-                            <span>Pas Foto Formal Santri (3x4)</span>
+                    <div id="card_file_foto" class="p-4 bg-gray-50 dark:bg-gray-750 rounded-xl border border-gray-200 dark:border-gray-600 transition-all duration-300">
+                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1 flex items-center justify-between">
+                            <span class="flex items-center gap-1.5">
+                                <span class="iconify text-lg text-emerald-700 dark:text-emerald-400" data-icon="mdi:camera-account"></span>
+                                <span>Pas Foto Formal Santri (3x4)</span>
+                            </span>
+                            <span id="badge_file_foto" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/80 dark:text-emerald-200 items-center gap-1">
+                                <span class="iconify" data-icon="mdi:check-circle"></span> Berhasil Dipilih
+                            </span>
                         </label>
-                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Latar belakang merah/biru berbusana muslim rapi</p>
-                        <input type="file" name="file_foto" accept=".jpg,.jpeg,.png"
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">Latar belakang merah/biru berbusana muslim rapi (Maks. 3MB)</p>
+                        <input type="file" name="file_foto" id="input_file_foto" accept=".jpg,.jpeg,.png"
+                               onchange="handleFileUploadNotice(this, 'file_foto')"
                                class="w-full text-xs text-gray-600 dark:text-gray-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 dark:file:bg-emerald-950 file:text-emerald-800 dark:file:text-emerald-300 hover:file:bg-emerald-200 cursor-pointer">
+                        <div id="info_file_foto" class="hidden mt-2 p-2 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-lg text-xs text-emerald-900 dark:text-emerald-200 flex items-center justify-between gap-2">
+                            <span class="truncate flex items-center gap-1.5">
+                                <span class="iconify text-emerald-600 text-base shrink-0" data-icon="mdi:file-check"></span>
+                                <span class="filename font-semibold truncate"></span>
+                                <span class="filesize text-[10px] text-emerald-700 dark:text-emerald-400 shrink-0"></span>
+                            </span>
+                            <button type="button" onclick="clearUploadedFile('file_foto')" class="text-red-500 hover:text-red-700 text-xs shrink-0 font-bold ml-1">✕</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -481,5 +537,67 @@
         const currentOldJurusan = @json(old('jurusan', 'Multimedia & DKV'));
         handleJenjangChange(currentOldJurusan);
     });
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function handleFileUploadNotice(input, fieldKey) {
+        const card = document.getElementById('card_' + fieldKey);
+        const badge = document.getElementById('badge_' + fieldKey);
+        const info = document.getElementById('info_' + fieldKey);
+
+        if (!card || !badge || !info) return;
+
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const maxMB = (fieldKey === 'file_foto') ? 3 : 5;
+            const maxBytes = maxMB * 1024 * 1024;
+
+            if (file.size > maxBytes) {
+                alert(`⚠️ Ukuran file terlalu besar (${formatFileSize(file.size)}). Maksimal ukuran file adalah ${maxMB}MB.`);
+                input.value = '';
+                clearUploadedFile(fieldKey);
+                return;
+            }
+
+            // Tampilkan card visual sukses
+            card.classList.remove('bg-gray-50', 'dark:bg-gray-750', 'border-gray-200', 'dark:border-gray-600');
+            card.classList.add('bg-emerald-50/70', 'dark:bg-emerald-950/30', 'border-emerald-300', 'dark:border-emerald-700');
+
+            badge.classList.remove('hidden');
+            badge.classList.add('inline-flex');
+
+            info.classList.remove('hidden');
+            info.querySelector('.filename').textContent = file.name;
+            info.querySelector('.filesize').textContent = `(${formatFileSize(file.size)})`;
+        } else {
+            clearUploadedFile(fieldKey);
+        }
+    }
+
+    function clearUploadedFile(fieldKey) {
+        const input = document.getElementById('input_' + fieldKey);
+        const card = document.getElementById('card_' + fieldKey);
+        const badge = document.getElementById('badge_' + fieldKey);
+        const info = document.getElementById('info_' + fieldKey);
+
+        if (input) input.value = '';
+        if (card) {
+            card.classList.remove('bg-emerald-50/70', 'dark:bg-emerald-950/30', 'border-emerald-300', 'dark:border-emerald-700');
+            card.classList.add('bg-gray-50', 'dark:bg-gray-750', 'border-gray-200', 'dark:border-gray-600');
+        }
+        if (badge) {
+            badge.classList.add('hidden');
+            badge.classList.remove('inline-flex');
+        }
+        if (info) {
+            info.classList.add('hidden');
+        }
+    }
 </script>
 @endsection
