@@ -46,23 +46,23 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 3. Guru Default (Ust Mohamad Paisal)
+        // 4. Guru User
         $guru = User::firstOrCreate(
             ['email' => 'guru@gmail.com'],
             [
                 'name' => 'Ust Mohamad Paisal',
-                'password' => bcrypt('password123'),
+                'password' => bcrypt('password'),
                 'role' => 'guru'
             ]
         );
 
-        // 4. User Pendaftar Dummy
-        $userPendaftar = User::firstOrCreate(
-            ['email' => 'pendaftar@gmail.com'],
+        // 5. Santri / Siswa User
+        $santriUser = User::firstOrCreate(
+            ['email' => 'santri@gmail.com'],
             [
-                'name' => 'Ahmad Santri Calon',
+                'name' => 'Ahmad Santri',
                 'password' => bcrypt('password'),
-                'role' => 'user'
+                'role' => 'santri'
             ]
         );
 
@@ -77,8 +77,8 @@ class DatabaseSeeder extends Seeder
         $santri1 = \App\Models\Santri::firstOrCreate(
             ['nisn' => '0091234501'],
             [
-                'user_id' => $userPendaftar->id,
-                'nama_lengkap' => 'Ahmad Santri Calon',
+                'user_id' => $santriUser->id,
+                'nama_lengkap' => 'Ahmad Santri',
                 'kelas_id' => $kelasI->id,
                 'jenis_kelamin' => 'Laki-laki',
                 'no_hp' => '081234567890',
