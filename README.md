@@ -1,32 +1,90 @@
-# 🏫 Sistem Informasi Penerimaan Santri Baru (PSB) & Profil Web - Pondok Pesantren Al-Fattah
+# 🏫 Sistem Informasi Akademik & Penerimaan Santri Baru (PSB) - Pondok Pesantren Al-Fattah
 
-Sistem Informasi Penerimaan Santri Baru (PSB) berbasis web untuk **Pondok Pesantren Al-Fattah Tigaraksa, Kabupaten Tangerang**. Aplikasi ini dikembangkan menggunakan **Laravel 12**, **Tailwind CSS**, dan database **SQLite / MySQL** dengan arsitektur **Multi-Role Access Control (RBAC)** serta modul pelaporan eksekutif.
+Sistem Informasi Terpadu berbasis web untuk **Pondok Pesantren Al-Fattah Tigaraksa, Kabupaten Tangerang**. Aplikasi ini dikembangkan menggunakan **Laravel 12**, **Tailwind CSS**, dan database **SQLite / MySQL** dengan arsitektur **Multi-Role Access Control (RBAC 5 Level)**, integrasi payment gateway **Midtrans**, serta modul pelaporan eksekutif.
 
 ---
 
-## 🌟 Fitur Utama & Multi-Role Access Control
+## 🌟 Fitur Utama & Multi-Role Access Control (5 Roles)
 
-Sistem ini memiliki 3 level hak akses pengguna dengan antarmuka (UI/UX) dan fitur yang disesuaikan:
+Sistem ini memiliki 5 hak akses pengguna dengan portal, hak otorisasi, dan antarmuka (UI/UX) yang disesuaikan:
 
-### 1. 🧑‍🎓 Portal Calon Santri / Pendaftar
-* **Pendaftaran Akun Santri Baru**: Calon santri membuat akun terlebih dahulu sebelum melengkapi biodata.
-* **Formulir Biodata Interaktif**: Pengisian data diri, NIK, tempat/tanggal lahir, biodata orang tua, serta upload berkas dokumen (**Kartu Keluarga, Akta Kelahiran, Ijazah**).
-* **Tracking Status Seleksi Real-time**: Memantau status verifikasi dokumen (*Pending / Dalam Proses*, *Terverifikasi / Lulus*, atau *Ditolak*).
-* **Cetak Kartu Bukti Pendaftaran (PDF)**: Mengunduh Kartu Bukti Pendaftaran resmi berformat PDF untuk dibawa saat tes masuk.
-
-### 2. 👑 Portal Administrator (Validator & Content Manager)
-* **Verifikasi & Validasi Dokumen**: Pratinjau (*preview*) dokumen KK, Akta, dan Ijazah calon santri via modal interaktif, lalu melakukan verifikasi (`Approve`) atau penolakan (`Reject`).
-* **Kelola Data Pendaftar & Arsip**: Pencarian, penyaringan (*filtering*), pengeditan, serta pengarsipan data pendaftar.
+### 1. 👑 Portal Administrator (`/admin/dashboard`)
+* **Manajemen Pengguna (User Management)**: CRUD user lengkap (Tambah Akun Baru, Ubah Role, Filter Role, Pencarian Cepat, dan Reset Password).
+* **Verifikasi & Validasi Berkas Pendaftar**: Meninjau formulir pendaftaran, pratinjau berkas (KK, Akta Kelahiran, Ijazah/SKL, Pasfoto), dan tombol **"Terbitkan Akun Santri"** dengan fitur kirim kredensial otomatis via WhatsApp.
+* **Manajemen Akademik Terpadu**:
+  * Data Santri & Siswa Aktif
+  * Data Guru & Pengajar
+  * Data Rombongan Belajar (Kelas)
+  * Data Mata Pelajaran (Mapel)
 * **Kelola Content Management System (CMS)**:
   * Hero Banner Carousel Landing Page
-  * Berita & Pengumuman
-  * Video Kegiatan Youtube
+  * Berita & Pengumuman Pesantren
+  * Video Kegiatan YouTube
   * Testimoni Alumni
-* **Manajemen Pengguna (User Management)**: Pengelolaan seluruh akun terdaftar dan pembagian role.
+* **Rekap Transaksi Midtrans**: Monitoring log pembayaran infaq/pendaftaran secara real-time.
 
-### 3. 🎓 Portal Eksekutif Kepala Sekolah
-* **Dashboard Laporan Real-time**: Ringkasan statistik jumlah pendaftar masuk, diterima/lulus, dalam proses, dan tidak lulus.
-* **Export Laporan Eksekutif (Excel & PDF)**: Mengunduh rekapitulasi data pendaftaran santri baru secara otomatis.
+### 2. 🏛️ Portal Ketua Yayasan (`/yayasan/dashboard`)
+* **Dashboard Eksekutif Yayasan**: Ringkasan statistik operasional pondok pesantren secara menyeluruh.
+* **Laporan Terpadu & Cetak PDF**:
+  * Laporan Santri Aktif
+  * Laporan Data Guru & Staf
+  * Laporan Rekap Nilai Akademik
+  * Laporan Presensi / Absensi Santri
+  * Laporan Rekap Keuangan & Infaq Pendaftaran
+  * Laporan Pendaftar Santri Baru
+
+### 3. 🎓 Portal Kepala Sekolah (`/kepsek/dashboard`)
+* **Monitoring Akademik**: Pantauan harian terhadap kegiatan belajar mengajar santri.
+* **Laporan Manajerial Sekolah**:
+  * Laporan Perkembangan Santri
+  * Laporan Kinerja & Distribusi Mengajar Guru
+  * Laporan Hasil Penilaian Santri
+  * Laporan Rekapitulasi Presensi Santri
+  * Laporan PSB (Penerimaan Santri Baru)
+
+### 4. 👨‍🏫 Portal Guru & Pengajar (`/guru/dashboard`)
+* **Input Penilaian Santri (`/guru/nilai`)**: Pengisian nilai harian, PTS, dan PAS santri berdasarkan kelas dan mata pelajaran yang diampu.
+* **Presensi / Absensi Harian Santri (`/guru/absensi`)**: Pencatatan kehadiran santri (Hadir, Sakit, Izin, Alpa).
+* **Rekapitulasi Nilai (`/guru/rekap`)**: Cetak dan pratinjau rekap daftar nilai santri.
+
+### 5. 🧑‍🎓 Portal Santri / Wali Santri (`/dashboard`)
+* **Biodata Resmi Santri**: Profil lengkap, NISN, NIK, dan asal rombel/kelas.
+* **Cek Nilai & Transkrip Akademik**: Pemantauan hasil belajar dan evaluasi berkala.
+* **Jadwal Pelajaran**: Jadwal harian tatap muka mata pelajaran santri.
+* **Status Pembayaran & Midtrans**: Status registrasi, riwayat transaksi, dan cetak kwitansi pembayaran resmi.
+
+---
+
+## 📋 Alur Pendaftaran Santri Baru (PSB Online)
+
+Alur penerimaan santri baru dirancang higienis, aman, dan terverifikasi berkas terlebih dahulu:
+
+```mermaid
+flowchart TD
+    A["1. Calon Santri Isi Formulir & Upload Berkas (KK, Akta, Ijazah, Foto)"] --> B["2. Halaman Sukses & Nomor Registrasi (PSB-...)"]
+    B --> C["3. Berkas Masuk Antrean Verifikasi Panitia"]
+    C --> D{"4. Admin Meninjau Dokumen di /admin/pendaftar"}
+    D -- "Berkas Valid & Disetujui" --> E["5. Admin Klik 'Buatkan Akun'"]
+    E --> F["6. Terbit Akun Resmi & Kirim Kredensial via WhatsApp"]
+    F --> G["7. Santri Login ke Portal Resmi (/login)"]
+    G --> H["8. Santri Selesaikan Administrasi / Pembayaran Midtrans di Portal"]
+```
+
+---
+
+## 🔑 Akun Resmi Default (Database Seeder)
+
+Untuk keperluan pengujian, sistem menyediakan 1 akun resmi untuk masing-masing role:
+
+| Role | Nama Pengguna | Alamat Email | Kata Sandi | Portal Dashboard |
+|---|---|---|---|---|
+| 👑 **Administrator** | Admin Al-Fattah | `admin@gmail.com` | `password` | `/admin/dashboard` |
+| 🏛️ **Ketua Yayasan** | Ketua Yayasan Al-Fattah | `yayasan@gmail.com` | `password` | `/yayasan/dashboard` |
+| 🎓 **Kepala Sekolah** | KH. Iskandar Zulkarnaen, M.M.Pd. | `kepsek@gmail.com` | `password` | `/kepsek/dashboard` |
+| 👨‍🏫 **Guru / Pengajar** | Ust Mohamad Paisal | `guru@gmail.com` | `password` | `/guru/dashboard` |
+| 🧑‍🎓 **Santri / Wali** | Ahmad Santri | `santri@gmail.com` | `password` | `/dashboard` |
+
+> **Catatan:** Halaman login (`/login`) bersih tanpa tombol demo. Admin dapat menambahkan akun pengguna baru kapan saja melalui menu **Manajemen Pengguna** di dashboard admin.
 
 ---
 
@@ -35,106 +93,54 @@ Sistem ini memiliki 3 level hak akses pengguna dengan antarmuka (UI/UX) dan fitu
 * **Backend Framework**: Laravel 12.x (PHP 8.2+)
 * **Frontend UI**: Blade Templating, Tailwind CSS, Alpine.js, Bootstrap 5, Iconify, Lucide Icons
 * **Database**: SQLite (Default Quick Setup) / MySQL / MariaDB
+* **Payment Gateway**: Midtrans Snap API (QRIS, VA Bank, E-Wallet)
 * **PDF Generator**: `barryvdh/laravel-dompdf`
 * **Excel Export**: `maatwebsite/excel`
 * **Development Server**: Laragon / XAMPP & Vite
 
 ---
 
-## 🚀 Langkah Instalasi & Cara Menjalankan Project
+## 🚀 Langkah Instalasi & Menjalankan Project
 
-### 1. Prasyarat Sistem
-* PHP >= 8.2 (dengan extension `sqlite3`, `pdo_sqlite`, `gd`, `zip`, dan `pdo_mysql` aktif)
-* Composer >= 2.x
-* Node.js >= 18.x & npm
-* Web server lokal (misalnya **Laragon** atau **XAMPP**)
-
-### 2. Pindah ke Folder Project & Install Dependencies
-Jika baru mengekstrak folder project, buka terminal PowerShell dan masuk ke direktori:
+### 1. Pindah ke Folder Project & Install Dependencies
 ```bash
 cd "D:\Kuliah\Semester 8\ProjectWork\my-fattah-main"
-```
-
-Jika vendor/node_modules belum di-install:
-```bash
 composer install
 npm install
 ```
 
-### 3. Konfigurasi Environment & Key
-File `.env` sudah dikonfigurasi menggunakan database SQLite (`database/database.sqlite`).
-Jika file `.env` belum ada:
+### 2. Konfigurasi Environment & Key
 ```bash
 copy .env.example .env
 php artisan key:generate
 ```
 
-### 4. Migration & Seeder Database
-Jalankan migrasi tabel beserta data dummy default:
+### 3. Migration & Seeder Database
+Jalankan migrasi tabel beserta data resmi default:
 ```bash
-# Menggunakan PATH PHP Laragon (jika PHP belum masuk ke Global Environment Path):
-$env:Path += ";C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64"; php artisan migrate:fresh --seed
-
-# Atau jika PHP sudah terdaftar secara global:
 php artisan migrate:fresh --seed
 ```
 
-### 5. Storage Link Asset
-Hubungkan folder penyimpanan publik agar berkas/foto pendaftar dapat diakses:
+### 4. Storage Link Asset
+Hubungkan folder penyimpanan publik agar berkas/foto dokumen pendaftar dapat diakses:
 ```bash
-$env:Path += ";C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64"; php artisan storage:link
+php artisan storage:link
 ```
 
-### 6. Menjalankan Server Development
-
-Buka **2 Terminal PowerShell**:
+### 5. Menjalankan Server Development
+Buka **2 Terminal**:
 
 **Terminal 1 (Laravel Server):**
 ```bash
-$env:Path += ";C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64"; php artisan serve
+php artisan serve
 ```
 
-**Terminal 2 (Vite Server):**
+**Terminal 2 (Vite Compiler):**
 ```bash
 npm run dev
 ```
 
-Buka browser di: **`http://127.0.0.1:8000`**
-
----
-
-## 🔑 Akun Demo Default (Database Seeder)
-
-Anda dapat langsung mencoba login menggunakan akun default berikut di halaman **`/login`**:
-
-| Role | Email | Password | Hak Akses Dashboard |
-|---|---|---|---|
-| 👑 **Administrator** | `admin@gmail.com` | `password` | `/admin/dashboard` |
-| 🎓 **Kepala Sekolah** | `kepsek@gmail.com` | `password` | `/kepsek/dashboard` |
-| 🧑‍คับ **Calon Santri** | `pendaftar@gmail.com` | `password` | `/user/dashboard` |
-
----
-
-## 🌐 Cara Hosting Gratis untuk Demo Pihak Yayasan
-
-Agar pihak yayasan sekolah dapat melihat dan mencoba sistem ini secara online tanpa biaya, berikut 2 opsi paling direkomendasikan:
-
-### Opsi A: Menggunakan Ngrok (Paling Cepat & Instan tanpa Setup Server)
-Opsi ini mempublikasikan localhost komputer Anda ke internet secara temporer saat Anda presentasi.
-1. Download **[Ngrok](https://ngrok.com/)**.
-2. Jalankan server Laravel Anda (`php artisan serve` di port `8000`).
-3. Di terminal baru, jalankan:
-   ```bash
-   ngrok http 8000
-   ```
-4. Ngrok akan memberikan URL publik (contoh: `https://abcd-123.ngrok-free.app`). Bagikan URL tersebut ke pihak yayasan!
-
-### Opsi B: Cloud Hosting Gratis via Render.com / Railway.app
-1. Push folder project ini ke **GitHub** repository Anda.
-2. Buat akun di **[Render.com](https://render.com/)** atau **[Railway.app](https://railway.app/)**.
-3. Hubungkan repository GitHub Anda.
-4. Set Environment Variables di dashboard hosting (`APP_KEY`, `DB_CONNECTION=sqlite`, dll).
-5. Aplikasi akan otomatis ter-deploy dan dapat diakses 24/7 secara gratis.
+Akses aplikasi di browser: **`http://127.0.0.1:8000`**
 
 ---
 
