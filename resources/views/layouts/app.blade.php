@@ -7,7 +7,22 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class' }</script>
+  <script>
+    tailwind.config = { 
+      darkMode: 'class' 
+    };
+
+    // Eksekusi instan di HEAD sebelum halaman selesai render agar tidak flickering / delay
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
 
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -16,10 +31,10 @@
   @stack('styles')
 </head>
 
-<body class="antialiased bg-white dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+<body class="antialiased bg-white dark:bg-gray-900 dark:text-gray-100">
 
 <!-- Navbar -->
-<nav class="fixed top-0 left-0 w-full backdrop-blur-md bg-white/50 dark:bg-gray-800/50 shadow-md z-50 border-b border-white/20 dark:border-gray-700/20 transition-all duration-500">
+<nav class="fixed top-0 left-0 w-full backdrop-blur-md bg-white/70 dark:bg-gray-800/80 shadow-md z-50 border-b border-white/20 dark:border-gray-700/20">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     <!-- Logo -->
     <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
@@ -187,15 +202,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkToggle = document.getElementById('dark-toggle');
   const themeIcon = document.getElementById('theme-icon');
 
-  if (!mobileMenuBtn || !mobileMenu || !hamburgerIcon || !darkToggle || !themeIcon) {
-    console.warn("⚠️ Elemen penting navbar tidak ditemukan. Pastikan ID-nya sesuai.");
-    return;
+  if (mobileMenuBtn && mobileMenu && hamburgerIcon) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.toggle('hidden');
+      hamburgerIcon.setAttribute('data-icon', isHidden ? 'mdi:menu' : 'mdi:close');
+    });
   }
-
-  mobileMenuBtn.addEventListener('click', () => {
-    const isHidden = mobileMenu.classList.toggle('hidden');
-    hamburgerIcon.setAttribute('data-icon', isHidden ? 'mdi:menu' : 'mdi:close');
-  });
 
   if (tentangToggle && tentangMenu && tentangIcon) {
     tentangToggle.addEventListener('click', () => {
@@ -204,31 +216,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const setTheme = (mode) => {
-    if (mode === 'dark') {
-      html.classList.add('dark');
+  const updateIcon = (isDark) => {
+    if (!themeIcon) return;
+    if (isDark) {
       themeIcon.setAttribute('data-icon', 'mdi:white-balance-sunny');
-      localStorage.setItem('theme', 'dark');
+      themeIcon.style.color = '#FBBF24'; // Kuning cerah matahari
     } else {
-      html.classList.remove('dark');
       themeIcon.setAttribute('data-icon', 'mdi:weather-night');
-      localStorage.setItem('theme', 'light');
+      themeIcon.style.color = '#D97706'; // Kuning gelap bulan
     }
   };
 
-  if (
-    localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    setTheme('dark');
-  } else {
-    setTheme('light');
-  }
+  const applyTheme = (mode) => {
+    if (mode === 'dark') {
+      html.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      updateIcon(true);
+    } else {
+      html.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      updateIcon(false);
+    }
+  };
 
-  darkToggle.addEventListener('click', () => {
-    const isDark = html.classList.contains('dark');
-    setTheme(isDark ? 'light' : 'dark');
-  });
+  // Sinkronkan icon sesuai kondisi class html saat ini
+  updateIcon(html.classList.contains('dark'));
+
+  if (darkToggle) {
+    darkToggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      applyTheme(isDark ? 'light' : 'dark');
+    });
+  }
 });
 </script>
 
