@@ -17,15 +17,31 @@
       <div class="p-2 bg-emerald-500 text-white rounded-xl">
         <span class="iconify text-2xl" data-icon="mdi:check-decagram"></span>
       </div>
-      <div>
-        <h4 class="text-base font-bold text-emerald-900">🎉 Akun Calon Santri Baru Berhasil Dibuatkan!</h4>
-        <p class="text-xs text-emerald-700 mt-0.5">Silakan bagikan kredensial berikut kepada calon santri / orang tua santri:</p>
+      <div class="flex-1">
+        <h4 class="text-base font-bold text-emerald-900">🎉 Akun Calon Santri Baru Berhasil Diterbitkan!</h4>
+        <p class="text-xs text-emerald-700 mt-0.5">Kredensial login berikut dapat langsung dikirimkan ke calon santri / orang tua:</p>
         <div class="mt-3 bg-white p-4 rounded-xl border border-emerald-200 font-mono text-xs space-y-1.5 max-w-md shadow-sm">
           <div><strong>Nama :</strong> {{ session('akun_created')['nama'] }}</div>
           <div><strong>Email:</strong> <span class="text-blue-600 font-bold select-all">{{ session('akun_created')['email'] }}</span></div>
           <div><strong>Password:</strong> <span class="text-red-600 font-bold select-all">{{ session('akun_created')['password'] }}</span></div>
-          <div class="pt-2 text-[11px] text-gray-400 font-sans">Santri dapat langsung login di <a href="{{ route('login') }}" target="_blank" class="text-green-600 underline">Halaman Login</a></div>
         </div>
+        
+        @if(!empty(session('akun_created')['phone']))
+          @php
+            $waPhone = preg_replace('/[^0-9]/', '', session('akun_created')['phone']);
+            if (str_starts_with($waPhone, '0')) {
+                $waPhone = '62' . substr($waPhone, 1);
+            }
+            $pesanWa = "Assalamu'alaikum Warahmatullahi Wabarakatuh.\n\nSelamat! Berkas pendaftaran di Pondok Pesantren Al-Fattah atas nama *" . session('akun_created')['nama'] . "* telah DIVERIFIKASI dan DISETUJUI.\n\nBerikut kredensial akun portal santri Anda:\n📧 Email: " . session('akun_created')['email'] . "\n🔑 Password: " . session('akun_created')['password'] . "\n\nSilakan login di:\n" . route('login') . "\n\nSetelah login, silakan cek menu Pembayaran untuk administrasi daftar ulang.\n\nJazakumullah Khairan,\nPanitia PSB Ponpes Al-Fattah";
+          @endphp
+          <div class="mt-3">
+            <a href="https://wa.me/{{ $waPhone }}?text={{ urlencode($pesanWa) }}" target="_blank"
+               class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-xl shadow transition">
+              <span class="iconify text-lg" data-icon="mdi:whatsapp"></span>
+              <span>Kirim Kredensial via WhatsApp ke Santri</span>
+            </a>
+          </div>
+        @endif
       </div>
     </div>
   </div>

@@ -209,11 +209,12 @@ class PendaftarController extends Controller
             $santri->save();
         }
 
-        // 🔹 Arahkan langsung ke fitur Data Santri Aktif (/admin/santri) dengan info kredensial
-        return redirect()->route('admin.santri.index')->with('akun_created', [
+        // 🔹 Arahkan langsung ke fitur Data Pendaftar (/admin/pendaftar) dengan info kredensial
+        return redirect()->route('admin.pendaftar.index')->with('akun_created', [
             'nama' => $nama,
             'email' => $email,
             'password' => $passwordPlain,
+            'phone' => $phone,
         ])->with('success', "Akun login santri {$nama} berhasil diterbitkan dan otomatis terdaftar di Data Santri Aktif!");
     }
 }

@@ -121,16 +121,16 @@ class PendaftaranController extends Controller
             'file_foto' => $fileFoto,
         ]);
 
-        // Otomatis buatkan akun User & Santri agar pendaftar bisa langsung login
-        $user = $this->buatAkunUser($pendaftar);
-
-        // Auto login akun pendaftar jika user berhasil dibuat
-        if ($user) {
-            \Illuminate\Support\Facades\Auth::login($user);
-            return redirect()->route('user.status')->with('success', 'Pendaftaran Berhasil! Data & berkas dokumen Anda telah disimpan. Silakan tunggu proses verifikasi berkas oleh Tim Admin Al-Fattah sebelum melakukan pembayaran.');
+        // Kirim notifikasi WA/SMS jika nomor terisi (opsional)
+        try {
+            $msg = "Assalamu'alaikum {$pendaftar->nama}, terima kasih telah mendaftar di Pondok Pesantren Al-Fattah. Nomor Registrasi Anda: {$pendaftar->order_id}. Berkas Anda sedang dalam proses verifikasi tim panitia. Akun portal santri akan dikirimkan setelah berkas disetujui.";
+            app(WhatsappService::class)->send($pendaftar->no_hp, $msg);
+        } catch (\Throwable $e) {
+            Log::info("WA Service notice: " . $e->getMessage());
         }
 
-        return redirect()->route('login')->with('success', 'Pendaftaran Berhasil! Silakan login untuk memantau status verifikasi berkas dokumen Anda.');
+        // Tampilkan halaman sukses & instruksi menunggu verifikasi admin
+        return view('pendaftaran.sukses', compact('pendaftar'));
     }
 
     // 🔹 Midtrans Notification Handler

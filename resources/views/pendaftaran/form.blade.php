@@ -57,9 +57,9 @@
                     <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 opacity-90">
                         <div class="flex items-center gap-2 mb-1">
                             <span class="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold text-xs flex items-center justify-center">4</span>
-                            <span class="text-xs font-bold text-gray-800 dark:text-gray-200">Akun Santri Aktif</span>
+                            <span class="text-xs font-bold text-gray-800 dark:text-gray-200">Terbit Akun Santri</span>
                         </div>
-                        <p class="text-[11px] text-gray-500 dark:text-gray-400">Cetak KTS & bukti daftar</p>
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400">Notifikasi WA & Kredensial</p>
                     </div>
                 </div>
             </div>
